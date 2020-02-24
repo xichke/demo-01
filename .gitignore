@@ -7,3 +7,6 @@ npm-debug.log
 .idea/
 node_modules/
 yarn-error.log
+
+config/default.yml
+.log.json

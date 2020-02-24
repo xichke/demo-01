@@ -1,0 +1,12 @@
+{
+    "apps": [{
+        "name": "gc-analytics",
+        "script": "app.js",
+        "max_memory_restart": "800M",
+        "instances": 0,
+        "watch": false,
+        "wait_ready": true,
+        "exec_mode": "cluster",
+        "autorestart": true
+    }]
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>GeoComply Analytics</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link href="/css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
+    <link href="/css/font-awesome.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp{{auth}}&callback=initialize" async defer></script>
+    <script type="text/javascript" src="/js/map.js"></script>
+</head>
+
+<body>
+    <div id="map"></div>
+    <input type="hidden" id="txtRefreshInterval" value="{{config.refresh_interval}}" />
+</body>

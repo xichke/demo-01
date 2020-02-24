@@ -1,0 +1,10 @@
+version: '2'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo
+    restart: always
+    ports:
+      - '0.0.0.0:27017:27017'
+    volumes:
+        - /Users/Shared/db/mongo:/data/db
