@@ -1,19 +1,27 @@
 'use strict';
-
 var path = require('path'),
-  mongoose = require('mongoose'),
-  User = mongoose.model('User');
+	config = require('config'),
+	mongoose = require('mongoose'),
+	jwt = require('jsonwebtoken'),
+	User = mongoose.model('User');
 
 exports.create = (data) => {
-  console.log('=======>>> data : ', data);
-  (async () => {
-    var item = new User(data);
-    await item.save();
-    console.log('======>>> item : ', item);
-  })().catch(err => {
-    console.log('======>>> err : ', err);
-    throw new Error(err);
-  });
+	(async () => {
+		var item = new User(data);
+		await item.save();
+	})().catch(err => {
+		throw err;
+	});
+}
+
+exports.verify = (token) => {
+	// jwt.verify(token, config.token.secret, (err, result) => {
+	// 	console.log('=====>>> verify : ', err, result);
+	// 	return result;
+	// });
+	return jwt.verify(token, config.token.secret, {
+		
+	});
 }
 
 // exports.read = function(req, res) {
@@ -25,7 +33,6 @@ exports.create = (data) => {
 //     }
 //   });
 // };
-
 // exports.update = function(req, res) {
 //   var item = req.user;
 //   article.title = req.body.title;
@@ -38,10 +45,8 @@ exports.create = (data) => {
 //     }
 //   });
 // };
-
 // exports.delete = function(req, res) {
 //   var article = req.article;
-
 //   article.remove(function(err) {
 //     if (err) {
 //       throw new Error(err);

@@ -1,11 +1,10 @@
 'use strict';
-
-var mongoose = require('mongoose'),
-	Schema = mongoose.Schema,
+const config = require('config'),
+	jwt = require('jsonwebtoken'),
 	bcrypt = require('bcrypt'),
-	config = require('config');
+	mongoose = require('mongoose');
 
-var UserSchema = new Schema({
+var UserSchema = new mongoose.Schema({
 	firstName: {
 		type: String,
 		trim: true,
@@ -63,5 +62,29 @@ UserSchema.pre('save', function(next) {
 		next();
 	});
 });
+
+UserSchema.methods = {
+	authenticate(password) {
+		return bcrypt.compareSync(password, this.password);
+	},
+	createToken() {
+		return jwt.sign({
+			username: this.username
+		}, config.token.secret, {
+			expiresIn: '30 days'
+		});
+	},
+	toAuthJSON() {
+		return {
+			username: this.username,
+			token: `JWT ${this.createToken()}`
+		};
+	},
+	toJSON() {
+		return {
+			username: this.username
+		};
+	}
+};
 
 mongoose.model('User', UserSchema);

@@ -1,21 +1,20 @@
 'use strict';
 
 const config = require('config'),
-    path = require('path'),
-    http = require('http'),
-    express = require('express'),
-    app = express(),
-    passport = require('passport'),
-    session = require('express-session'),
-    bodyParser = require('body-parser'),
-    utils = require('./modules/shared/utils');
+	path = require('path'),
+	http = require('http'),
+	express = require('express'),
+	app = express(),
+	passport = require('passport'),
+	session = require('express-session'),
+	bodyParser = require('body-parser'),
+	utils = require('./modules/shared/utils');
 
+require('./modules/shared/db')(app);
 // require('./modules/auth/passport')(passport);
 require('./modules/shared/middleware')(app);
 
-
-
-require('./modules/shared/db')(app);
+console.log(config.token.secret);
 
 // app.use(session({
 //     name: config.session.name,
@@ -28,12 +27,12 @@ require('./modules/shared/db')(app);
 //     },
 //     store: new MySQLStore({}, mysql.createConnection(config.db_auth))
 // }));
-// app.use(passport.initialize());
+app.use(passport.initialize());
 // app.use(passport.session());
-// app.set('passport', passport);
+app.set('passport', passport);
 
 utils.match('modules/**/route.js').forEach(function(e) {
-    require(path.resolve(e))(app);
+	require(path.resolve(e))(app);
 });
 require('./modules/error-handler')(app);
 

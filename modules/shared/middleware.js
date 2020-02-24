@@ -4,6 +4,7 @@ const config = require('config'),
     helmet = require('helmet'),
     methodOverride = require('method-override'),
     morgan = require('morgan'),
+    cors = require('cors'),
     exphbs = require('express-handlebars'),
     bodyParser = require('body-parser');
 
@@ -12,6 +13,7 @@ module.exports = function(app) {
     if (config.morgan)
         app.use(morgan(config.morgan));
     app.use(methodOverride());
+    app.use(cors());
     app.use(require('serve-static')('assets'));
     app.use(bodyParser.urlencoded({
         extended: true

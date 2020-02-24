@@ -7,7 +7,8 @@ module.exports = function(app) {
 	utils.match('modules/**/*.model.js').forEach(function(e) {
 		require(path.resolve(e));
 	});
-	mongoose.Promise = Promise
+	mongoose.Promise = Promise;
+	mongoose.set('debug', true);
 	mongoose.connection.on('connected', () => {
 		console.log('Connection Established');
 	}).on('reconnected', () => {
