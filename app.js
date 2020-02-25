@@ -12,7 +12,7 @@ const config = require('config'),
 
 require('./modules/shared/db')(app);
 // require('./modules/auth/passport')(passport);
-require('./modules/shared/middleware')(app);
+require('./modules/shared/*middleware')(app);
 
 console.log(config.token.secret);
 
@@ -31,7 +31,7 @@ app.use(passport.initialize());
 // app.use(passport.session());
 app.set('passport', passport);
 
-utils.match('modules/**/route.js').forEach(function(e) {
+utils.match('modules/**/*route.js').forEach(function(e) {
 	require(path.resolve(e))(app);
 });
 require('./modules/error-handler')(app);
