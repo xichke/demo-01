@@ -1,6 +1,6 @@
 {
     "apps": [{
-        "name": "gc-analytics",
+        "name": "fancy",
         "script": "app.js",
         "max_memory_restart": "800M",
         "instances": 0,

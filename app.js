@@ -12,9 +12,7 @@ const config = require('config'),
 
 require('./modules/shared/db')(app);
 // require('./modules/auth/passport')(passport);
-require('./modules/shared/*middleware')(app);
-
-console.log(config.token.secret);
+require('./modules/shared/middleware')(app);
 
 // app.use(session({
 //     name: config.session.name,
@@ -34,9 +32,8 @@ app.set('passport', passport);
 utils.match('modules/**/*route.js').forEach(function(e) {
 	require(path.resolve(e))(app);
 });
-require('./modules/error-handler')(app);
+require('./modules/shared/error-handler')(app);
 
 const server = http.createServer(app);
 server.listen(config.port);
 console.log(`App is running on port : ${config.port}`);
-module.exports = server;

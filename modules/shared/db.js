@@ -7,8 +7,9 @@ module.exports = function(app) {
 	utils.match('modules/**/*.model.js').forEach(function(e) {
 		require(path.resolve(e));
 	});
+	app.models = mongoose.models;
 	mongoose.Promise = Promise;
-	mongoose.set('debug', true);
+	mongoose.set('debug', config.db.debug);
 	mongoose.connection.on('connected', () => {
 		console.log('Connection Established');
 	}).on('reconnected', () => {
@@ -21,7 +22,7 @@ module.exports = function(app) {
 		throw new Error('DB connection error');
 	});
 	(async () => {
-		await mongoose.connect(config.db, {
+		await mongoose.connect(config.db.uri, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			useCreateIndex: true

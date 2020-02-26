@@ -4,23 +4,17 @@ const mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 let _schema = new Schema({
-  firstName: {
+  name: {
     type: String,
+    unique: true,
     trim: true
   },
-  lastName: {
+  address: {
     type: String,
     trim: true
   },
   phone: {
     type: String,
-    index: {
-      unique: true,
-      sparse: true
-    },
-    unique: true,
-    required: true,
-    lowercase: true,
     trim: true
   },
   updated: {
