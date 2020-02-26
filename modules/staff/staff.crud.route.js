@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 module.exports = function(app) {
-    let model = app.models.Store;
+    let model = app.models.Staff;
 
     //parse
     app.param('id', async (req, res, next, id) => {
@@ -10,7 +10,7 @@ module.exports = function(app) {
             if (!mongoose.Types.ObjectId.isValid(id)) {
                 return res.status(400).send('invalid id');
             }
-            req.store = await model.findById(id);
+            req.staff = await model.findById(id);
             next();
         } catch (err) {
             res.status(500).json({
@@ -19,7 +19,7 @@ module.exports = function(app) {
         }
     });
 
-    app.route('/api/store')
+    app.route('/api/staff')
         //create
         .post(async (req, res, next) => {
             try {
@@ -42,16 +42,16 @@ module.exports = function(app) {
                 });
             }
         });
-    app.route('/api/store/:id')
+    app.route('/api/staff/:id')
         //read
         .get((req, res, next) => {
-            res.json(req.store);
+            res.json(req.staff);
         })
         //update
         .put(async (req, res, next) => {
             try {
-                Object.assign(req.store, req.body);
-                let items = await req.store.save();
+                Object.assign(req.staff, req.body);
+                let items = await req.staff.save();
                 res.status(200).json(items);
             } catch (err) {
                 res.status(500).json({
@@ -62,10 +62,10 @@ module.exports = function(app) {
         //delete
         .delete(async (req, res, next) => {
             try {
-                if (!req.store) {
+                if (!req.staff) {
                     return res.status(404).send('not found');
                 }
-                req.store.delete();
+                req.staff.delete();
                 res.status(200).json({
                     status: 'deleted'
                 });

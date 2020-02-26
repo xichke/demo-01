@@ -6,6 +6,7 @@ const mongoose = require('mongoose'),
 let _schema = new Schema({
   name: {
     type: String,
+    unique: true,
     trim: true
   },
   address: {
@@ -25,4 +26,4 @@ let _schema = new Schema({
   }
 });
 
-mongoose.model('SpaClient', _schema);
+mongoose.model('Office', _schema);
