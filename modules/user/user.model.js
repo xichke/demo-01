@@ -5,47 +5,34 @@ const config = require('config'),
 	mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
-	firstName: {
+	name: {
 		type: String,
-		trim: true,
-		default: ''
-	},
-	lastName: {
-		type: String,
-		trim: true,
-		default: ''
-	},
-	displayName: {
-		type: String,
-		trim: true
-	},
-	email: {
-		type: String,
-		index: {
-			unique: true,
-			sparse: true
-		},
-		lowercase: true,
 		trim: true,
 		default: ''
 	},
 	username: {
 		type: String,
-		unique: 'Username already exists',
-		required: 'Please fill in a username',
+		unique: 'username has already existed',
+		required: 'username is required',
 		lowercase: true,
-		trim: true
+		trim: true,
+		index: true
 	},
-	password: {
-		type: String,
-		default: ''
-	},
+	password: String,
 	roles: {
 		type: [{
 			type: String,
-			enum: ['user', 'staff', 'operator', 'admin']
+			enum: ['client', 'admin']
 		}],
-		default: ['user']
+		default: ['client']
+	},
+	client: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Client'
+	},
+	salon: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Salon'
 	},
 	updated: {
 		type: Date
@@ -71,7 +58,7 @@ UserSchema.methods = {
 		return jwt.sign({
 			username: this.username
 		}, config.token.secret, {
-			expiresIn: '30 days'
+			expiresIn: '365 days'
 		});
 	},
 	toAuthJSON() {

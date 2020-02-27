@@ -6,7 +6,7 @@ const mongoose = require('mongoose'),
 let _schema = new Schema({
   name: {
     type: String,
-    unique: true,
+    unique: 'name has already existed',
     trim: true
   },
   address: {

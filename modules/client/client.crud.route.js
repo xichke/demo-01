@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 module.exports = function(app) {
-    let model = app.models.Office;
+    let model = app.models.Client;
 
     //parse
     app.param('id', async (req, res, next, id) => {
@@ -10,7 +10,7 @@ module.exports = function(app) {
             if (!mongoose.Types.ObjectId.isValid(id)) {
                 return res.status(400).send('invalid id');
             }
-            req.office = await model.findById(id);
+            req.client = await model.findById(id);
             next();
         } catch (err) {
             res.status(500).json({
@@ -19,7 +19,7 @@ module.exports = function(app) {
         }
     });
 
-    app.route('/api/office')
+    app.route('/api/client')
         //create
         .post(async (req, res, next) => {
             try {
@@ -34,7 +34,7 @@ module.exports = function(app) {
         //list
         .get(async (req, res, next) => {
             try {
-                let items = await model.find({}, 'name created');
+                let items = await model.find({});
                 res.status(200).json(items);
             } catch (err) {
                 res.status(500).json({
@@ -42,16 +42,16 @@ module.exports = function(app) {
                 });
             }
         });
-    app.route('/api/office/:id')
+    app.route('/api/client/:id')
         //read
         .get((req, res, next) => {
-            res.json(req.office);
+            res.json(req.client);
         })
         //update
         .put(async (req, res, next) => {
             try {
-                Object.assign(req.office, req.body);
-                let items = await req.office.save();
+                Object.assign(req.client, req.body);
+                let items = await req.client.save();
                 res.status(200).json(items);
             } catch (err) {
                 res.status(500).json({
@@ -62,10 +62,10 @@ module.exports = function(app) {
         //delete
         .delete(async (req, res, next) => {
             try {
-                if (!req.office) {
+                if (!req.client) {
                     return res.status(404).send('not found');
                 }
-                req.office.delete();
+                req.client.delete();
                 res.status(200).json({
                     status: 'deleted'
                 });

@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 module.exports = function(app) {
-    let model = app.models.Operator;
+    let model = app.models.Salon;
 
     //parse
     app.param('id', async (req, res, next, id) => {
@@ -10,7 +10,7 @@ module.exports = function(app) {
             if (!mongoose.Types.ObjectId.isValid(id)) {
                 return res.status(400).send('invalid id');
             }
-            req.operator = await model.findById(id);
+            req.salon = await model.findById(id);
             next();
         } catch (err) {
             res.status(500).json({
@@ -19,7 +19,7 @@ module.exports = function(app) {
         }
     });
 
-    app.route('/api/operator')
+    app.route('/api/salon')
         //create
         .post(async (req, res, next) => {
             try {
@@ -34,7 +34,7 @@ module.exports = function(app) {
         //list
         .get(async (req, res, next) => {
             try {
-                let items = await model.find({}, 'name created');
+                let items = await model.find({});
                 res.status(200).json(items);
             } catch (err) {
                 res.status(500).json({
@@ -42,16 +42,16 @@ module.exports = function(app) {
                 });
             }
         });
-    app.route('/api/operator/:id')
+    app.route('/api/salon/:id')
         //read
         .get((req, res, next) => {
-            res.json(req.operator);
+            res.json(req.salon);
         })
         //update
         .put(async (req, res, next) => {
             try {
-                Object.assign(req.operator, req.body);
-                let items = await req.operator.save();
+                Object.assign(req.salon, req.body);
+                let items = await req.salon.save();
                 res.status(200).json(items);
             } catch (err) {
                 res.status(500).json({
@@ -62,10 +62,10 @@ module.exports = function(app) {
         //delete
         .delete(async (req, res, next) => {
             try {
-                if (!req.operator) {
+                if (!req.salon) {
                     return res.status(404).send('not found');
                 }
-                req.operator.delete();
+                req.salon.delete();
                 res.status(200).json({
                     status: 'deleted'
                 });

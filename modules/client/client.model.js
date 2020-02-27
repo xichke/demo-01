@@ -6,7 +6,7 @@ const mongoose = require('mongoose'),
 let _schema = new Schema({
   name: {
     type: String,
-    unique: true,
+    unique: 'name has already existed',
     trim: true
   },
   address: {
@@ -17,6 +17,10 @@ let _schema = new Schema({
     type: String,
     trim: true
   },
+  salons: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Salon'
+  }],
   updated: {
     type: Date
   },
@@ -26,4 +30,4 @@ let _schema = new Schema({
   }
 });
 
-mongoose.model('Operator', _schema);
+mongoose.model('Client', _schema);

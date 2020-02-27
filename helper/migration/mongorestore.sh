@@ -1,0 +1,1 @@
+docker exec -i 58f3c536fca7 sh -c 'mongorestore --archive' < db.dump
