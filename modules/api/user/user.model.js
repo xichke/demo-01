@@ -44,7 +44,9 @@ var UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre('save', function(next) {
+	console.log('===>>>> ', this.password, config.saltRounds);
 	bcrypt.hash(this.password, config.saltRounds, (err, hash) => {
+		console.log('===>>>> aaaa', hash);
 		this.password = hash;
 		next();
 	});

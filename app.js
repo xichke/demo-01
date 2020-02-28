@@ -11,6 +11,7 @@ const config = require('config'),
 	utils = require('./modules/shared/utils');
 
 require('./modules/shared/db')(app);
+require('./modules/www/login/passport')(app);
 // require('./modules/auth/passport')(passport);
 require('./modules/shared/middleware')(app);
 

@@ -1,6 +1,16 @@
 port: 3000
-db: mongodb://localhost:27017/fancy
+db: 
+  uri: mongodb://localhost:27017/fancy
+  debug: true
 saltRounds: 10
 morgan: dev
-
+token:
+  secret: asdrgt5wefrw235t
+  issuer: 
+  audience: 
 logFile: .log.json
+
+session:
+    name: tf.sid
+    secret: ~6gmC8.v!}w1Z;sW
+    secure: false # Ensures the browser only sends the cookie over HTTPS

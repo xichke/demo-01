@@ -62,11 +62,6 @@ async@^2.6.1:
   dependencies:
     lodash "^4.17.14"
 
-async@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/async/-/async-3.1.1.tgz#dd3542db03de837979c9ebbca64ca01b06dc98df"
-  integrity sha512-X5Dj8hK1pJNC2Wzo2Rcp9FBVdJMGRR/S7V+lH46s8GVFhtbo5O4Le5GECCF/8PISVdkUA6mMPvgz7qTTD1rf1g==
-
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
@@ -116,7 +111,7 @@ body-parser@1.19.0, body-parser@^1.19.0:
     raw-body "2.4.0"
     type-is "~1.6.17"
 
-bowser@^2.7.0:
+bowser@2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/bowser/-/bowser-2.9.0.tgz#3bed854233b419b9a7422d9ee3e85504373821c9"
   integrity sha512-2ld76tuLBNFekRgmJfT2+3j5MIrP6bFict8WAIT3beq+srz1gcKNAdNKMqHqauQt63NmAa88HfP1/Ypa9Er3HA==
@@ -220,12 +215,24 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-config@^3.2.5:
-  version "3.2.5"
-  resolved "https://registry.yarnpkg.com/config/-/config-3.2.5.tgz#ab10ab88b61a873fbf9a5f0c6b4a22750422f243"
-  integrity sha512-8itpjyR01lAJanhAlPncBngYRZez/LoRLW8wnGi+6SEcsUyA1wvHvbpIrAJYDJT+W9BScnj4mYoUgbtp9I+0+Q==
+config@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/config/-/config-3.3.0.tgz#574deb6ff1438807b7ecf6dbad20dd32dd5655ab"
+  integrity sha512-Xw++JjmYOLLX2HaYpySAveO8a9o+Af0jpDdEt1st8xtLeZI0bDfNsI90DGFyE/7mNnEjHiI8ivp/PieM6ODtdw==
   dependencies:
     json5 "^1.0.1"
+
+connect-flash@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/connect-flash/-/connect-flash-0.1.1.tgz#d8630f26d95a7f851f9956b1e8cc6732f3b6aa30"
+  integrity sha1-2GMPJtlaf4UfmVax6MxnMvO2qjA=
+
+connect-mongo@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/connect-mongo/-/connect-mongo-3.2.0.tgz#20f776c7f2a9d8144fc76cfdcbf33edb05eb4d52"
+  integrity sha512-0Mx88079Z20CG909wCFlR3UxhMYGg6Ibn1hkIje1hwsqOLWtL9HJV+XD0DAjUvQScK6WqY/FA8tSVQM9rR64Rw==
+  dependencies:
+    mongodb "^3.1.0"
 
 console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
@@ -249,10 +256,23 @@ content-type@~1.0.4:
   resolved "https://registry.yarnpkg.com/content-type/-/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
   integrity sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
 
+cookie-parser@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/cookie-parser/-/cookie-parser-1.4.4.tgz#e6363de4ea98c3def9697b93421c09f30cf5d188"
+  integrity sha512-lo13tqF3JEtFO7FyA49CqbhaFkskRJ0u/UAiINgrIXeRCY41c88/zxtrECl8AKH3B0hj9q10+h3Kt8I7KlW4tw==
+  dependencies:
+    cookie "0.3.1"
+    cookie-signature "1.0.6"
+
 cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"
   integrity sha1-4wOogrNCzD7oylE6eZmXNNqzriw=
+
+cookie@0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
+  integrity sha1-5+Ch+e9DtMi6klxcWpboBtFoc7s=
 
 cookie@0.4.0:
   version "0.4.0"
@@ -586,20 +606,20 @@ helmet-crossdomain@0.4.0:
   resolved "https://registry.yarnpkg.com/helmet-crossdomain/-/helmet-crossdomain-0.4.0.tgz#5f1fe5a836d0325f1da0a78eaa5fd8429078894e"
   integrity sha512-AB4DTykRw3HCOxovD1nPR16hllrVImeFp5VBV9/twj66lJ2nU75DP8FPL0/Jp4jj79JhTfG+pFI2MD02kWJ+fA==
 
-helmet-csp@2.9.4:
-  version "2.9.4"
-  resolved "https://registry.yarnpkg.com/helmet-csp/-/helmet-csp-2.9.4.tgz#801382bac98f2f88706dc5c89d95c7e31af3a4a9"
-  integrity sha512-qUgGx8+yk7Xl8XFEGI4MFu1oNmulxhQVTlV8HP8tV3tpfslCs30OZz/9uQqsWPvDISiu/NwrrCowsZBhFADYqg==
+helmet-csp@2.9.5:
+  version "2.9.5"
+  resolved "https://registry.yarnpkg.com/helmet-csp/-/helmet-csp-2.9.5.tgz#ea1ebec6d481e8f9aa5f48cc4ca2714e031f627d"
+  integrity sha512-w9nps5adqFQwgktVPDbXkARmZot/nr8aegzQas9AXdBSwBFBBefPpDSTV0wtgHlAUdDwY6MZo7qAl9yts3ppJg==
   dependencies:
-    bowser "^2.7.0"
+    bowser "2.9.0"
     camelize "1.0.0"
     content-security-policy-builder "2.1.0"
     dasherize "2.0.0"
 
-helmet@^3.21.2:
-  version "3.21.2"
-  resolved "https://registry.yarnpkg.com/helmet/-/helmet-3.21.2.tgz#7e2a19d5f6d898a77b5d2858e8e4bb2cda59f19f"
-  integrity sha512-okUo+MeWgg00cKB8Csblu8EXgcIoDyb5ZS/3u0W4spCimeVuCUvVZ6Vj3O2VJ1Sxpyb8jCDvzu0L1KKT11pkIg==
+helmet@^3.21.3:
+  version "3.21.3"
+  resolved "https://registry.yarnpkg.com/helmet/-/helmet-3.21.3.tgz#15777aae82a4d2678c104fd18195a4012f429b67"
+  integrity sha512-8OjGNdpG3WQhPO71fSy2fT4X3FSNutU1LDeAf+YS+Vil6r+fE7w8per5mNed6egGYbZl3QhKXgFzMYSwys+YQw==
   dependencies:
     depd "2.0.0"
     dns-prefetch-control "0.2.0"
@@ -608,7 +628,7 @@ helmet@^3.21.2:
     feature-policy "0.3.0"
     frameguard "3.1.0"
     helmet-crossdomain "0.4.0"
-    helmet-csp "2.9.4"
+    helmet-csp "2.9.5"
     hide-powered-by "1.1.0"
     hpkp "2.0.0"
     hsts "2.2.0"
@@ -936,6 +956,19 @@ mongodb@3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.5.3.tgz#f2c7ce9b5fc9a13da116ff1b6e816f6256010a86"
   integrity sha512-II7P7A3XUdPiXRgcN96qIoRa1oesM6qLNZkzfPluNZjVkgQk3jnQwOT6/uDk4USRDTTLjNFw2vwfmbRGTA7msg==
+  dependencies:
+    bl "^2.2.0"
+    bson "^1.1.1"
+    denque "^1.4.1"
+    require_optional "^1.0.1"
+    safe-buffer "^5.1.2"
+  optionalDependencies:
+    saslprep "^1.0.0"
+
+mongodb@^3.1.0:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.5.4.tgz#f7609cfa9f8c56c35e844b4216ddc3a1b1ec5bef"
+  integrity sha512-xGH41Ig4dkSH5ROGezkgDbsgt/v5zbNUwE3TcFsSbDc6Qn3Qil17dhLsESSDDPTiyFDCPJRpfd4887dtsPgKtA==
   dependencies:
     bl "^2.2.0"
     bson "^1.1.1"
