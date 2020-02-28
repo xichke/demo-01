@@ -14,27 +14,13 @@ module.exports = (app) => {
 	});
 	passport.deserializeUser((id, done) => User.findOne({
 		_id: id
-	}, done));
+	}, 'username' , done));
 	passport.use('mongo',
 		new LocalStrategy({
 			usernameField: 'username',
 			passwordField: 'password',
 			passReqToCallback: true
 		}, async (req, username, password, done) => {
-			// connection.query('SELECT * FROM users WHERE username = ?', [username], (err, rows) => {
-			// 	if (err)
-			// 		return done('Something went wrong');
-			// 	if (!rows.length) {
-			// 		return done('User not found');
-			// 	}
-			// 	let user = rows[0];
-			// 	if (!bcrypt.compareSync(password, user.password)) {
-			// 		return done('Wrong password');
-			// 	}
-			// 	req.login(user, (e) => {
-			// 		return done(null, user);
-			// 	});
-			// });
 			try {
 				let user = await User.findOne({
 					username: username
