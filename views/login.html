@@ -2,16 +2,18 @@
     <div class="color-overlay"></div>
     <div class="container-login">
         <div class="wrap-login">
-            <form class="login-form" method="post" action="/login">
+            <form id="loginForm" class="login-form" method="post" action="/login">
                 <div class="wrap-input">
-                    <input name="username" class="input" type="text" placeholder="Username" autocomplete="off">
+                    <input id="txtUserName" name="username" class="input" type="text" placeholder="Username" autocomplete="off">
                     <span class="focus-input" data-placeholder="&#xf207;"></span>
                 </div>
                 <div class="wrap-input">
-                    <input name="password" class="input" type="password" placeholder="Password" autocomplete="off">
+                    <input id="txtPassword" name="password" class="input" type="password" placeholder="Password" autocomplete="off">
                     <span class="focus-input" data-placeholder="&#xf191;"></span>
                 </div>
-                <p>{{err}}</p>
+                <p id="loginError" class="text-warning toshow">
+                    Please enter a valid Username and Password
+                </p>
                 <div class="container-login-form-btn">
                     <button type="submit" class="login-form-btn">
                         Login

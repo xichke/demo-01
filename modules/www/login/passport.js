@@ -14,7 +14,7 @@ module.exports = (app) => {
 	});
 	passport.deserializeUser((id, done) => User.findOne({
 		_id: id
-	}, 'username' , done));
+	}, 'username', done));
 	passport.use('mongo',
 		new LocalStrategy({
 			usernameField: 'username',
@@ -47,7 +47,7 @@ module.exports = (app) => {
 		saveUninitialized: false,
 		cookie: {
 			secure: config.session.secure,
-			expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+			expires: new Date(Date.now() + 10 * 365 * 24 * 60 * 60 * 1000)
 		},
 		store: new MongoStore({
 			mongooseConnection: mongoose.connection
