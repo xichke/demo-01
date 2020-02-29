@@ -7,15 +7,22 @@ const config = require('config'),
 	app = express(),
 	utils = require('./modules/shared/utils');
 
-require('./modules/shared/db')(app);
-require('./modules/www/login/passport')(app);
-require('./modules/shared/middleware')(app);
-
-utils.match('modules/**/*route.js').forEach(function(e) {
-	require(path.resolve(e))(app);
+[
+	'./modules/shared/db',
+	'./modules/shared/middleware',
+	'./modules/www/login/passport',
+	'./modules/**/*route.js',
+	'./modules/shared/404',
+	'./modules/shared/error-handler'
+].forEach(e => {
+	if (e.includes('*')) {
+		utils.match(e).forEach((x) => {
+			require(path.resolve(x))(app);
+		});
+	} else {
+		require(e)(app);
+	}
 });
-
-require('./modules/shared/error-handler')(app);
 
 const server = http.createServer(app);
 server.listen(config.port);

@@ -21,7 +21,9 @@ module.exports = (app) => {
 			passwordField: 'password',
 			passReqToCallback: true
 		}, async (req, username, password, done) => {
+			console.log('=====>>>>>> here ', req.originalUrl);
 			try {
+				console.log('=====>>>>>> query ');
 				let user = await User.findOne({
 					username: username
 				});

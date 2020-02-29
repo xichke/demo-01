@@ -20,7 +20,7 @@ const config = require('config'),
 		return result;
 	})();
 module.exports = function(app) {
-	// app.set('trust proxy', 1);
+	app.set('trust proxy', 1);
 	if (config.morgan)
 		app.use(morgan(config.morgan));
 	app.use(methodOverride());
@@ -49,7 +49,8 @@ module.exports = function(app) {
 	app.use((req, res, next) => {
 		var _render = res.render;
 		res.render = function(view, options, fn) {
-			view = views[view];
+			if (views[view])
+				view = views[view];
 			_render.call(this, view, options, fn);
 		}
 		next();
