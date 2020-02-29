@@ -16,8 +16,7 @@ module.exports = (app) => {
 				});
 			} else {
 				res.send({
-					success: false,
-					message: err
+					success: false
 				});
 			}
 		})(req, res, next);

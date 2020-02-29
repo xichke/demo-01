@@ -150,7 +150,6 @@ $(function() {
 
 	$("#loginForm").submit(function(e) {
 		e.preventDefault();
-		// Get input field values
 		var username = $('#txtUserName').val(),
 			password = $('#txtPassword').val();
 		if (username && password) {
