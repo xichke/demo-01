@@ -9,8 +9,16 @@ const config = require('config'),
 	express = require('express'),
 	path = require('path'),
 	exphbs = require('express-handlebars'),
-	bodyParser = require('body-parser');
-
+	bodyParser = require('body-parser'),
+	utils = require('./utils'),
+	views = (() => {
+		let result = {};
+		utils.match('modules/**/*.html').forEach(e => {
+			let name = e.split('/').slice(-2).reverse().pop();
+			result[name] = `../${e}`;
+		})
+		return result;
+	})();
 module.exports = function(app) {
 	// app.set('trust proxy', 1);
 	if (config.morgan)
@@ -38,4 +46,12 @@ module.exports = function(app) {
 		extname: '.html'
 	}));
 	app.set('view engine', '.html');
+	app.use((req, res, next) => {
+		var _render = res.render;
+		res.render = function(view, options, fn) {
+			view = views[view];
+			_render.call(this, view, options, fn);
+		}
+		next();
+	});
 };

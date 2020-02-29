@@ -14,6 +14,7 @@ require('./modules/shared/middleware')(app);
 utils.match('modules/**/*route.js').forEach(function(e) {
 	require(path.resolve(e))(app);
 });
+
 require('./modules/shared/error-handler')(app);
 
 const server = http.createServer(app);
