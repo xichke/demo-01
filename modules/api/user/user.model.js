@@ -18,6 +18,29 @@ var UserSchema = new mongoose.Schema({
 		trim: true,
 		index: true
 	},
+	email: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	address: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	website: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	phone: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	dob: {
+		type: Date
+	},
 	password: String,
 	roles: {
 		type: [{
@@ -33,6 +56,13 @@ var UserSchema = new mongoose.Schema({
 	salon: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Salon'
+	},
+	status: {
+		type: [{
+			type: String,
+			enum: ['active', 'disabled']
+		}],
+		default: ['active']
 	},
 	updated: {
 		type: Date

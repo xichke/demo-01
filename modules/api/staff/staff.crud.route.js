@@ -34,7 +34,7 @@ module.exports = function(app) {
         //list
         .get(async (req, res, next) => {
             try {
-                let items = await model.find({}, 'name created');
+                let items = await model.find({}).lean();
                 res.status(200).json(items);
             } catch (err) {
                 res.status(500).json({

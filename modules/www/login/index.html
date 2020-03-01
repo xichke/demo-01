@@ -2,13 +2,15 @@
     <div class="color-overlay"></div>
     <div class="container-login">
         <div class="wrap-login">
-            <form id="loginForm" class="login-form">
+            <form id="loginForm" class="login-form" autocomplete="off">
+                <input type="text" name="username" class="toshow" />
+                <input type="password" name="password" class="toshow" />
                 <div class="wrap-input">
-                    <input id="txtUserName" class="input" type="text" placeholder="Username" autocomplete="off">
+                    <input id="txtUserName" class="input" type="text" placeholder="Username">
                     <span class="focus-input" data-placeholder="&#xf207;"></span>
                 </div>
                 <div class="wrap-input">
-                    <input id="txtPassword" class="input" type="password" placeholder="Password" autocomplete="off">
+                    <input id="txtPassword" class="input" type="password" placeholder="Password" autocomplete="new-password">
                     <span class="focus-input" data-placeholder="&#xf191;"></span>
                 </div>
                 <p id="loginError" class="text-warning toshow">

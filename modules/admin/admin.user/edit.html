@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-content">
             <div class="card-body">
-                <form novalidate v-on:submit="submit" action="#">
+                <form novalidate v-on:submit="submit" action="#" autocomplete="off">
                     <div class="row">
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
@@ -14,7 +14,7 @@
                             <div class="form-group">
                                 <div class="controls">
                                     <label>Password</label>
-                                    <input v-model="user.password" type="password" class="form-control" placeholder="Username">
+                                    <input v-model="user.password" type="password" class="form-control" placeholder="Password" autocomplete="new-password">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -73,7 +73,9 @@
                     </div>
                     <div class="row">
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                            <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Save changes</button>
+                            <a href="/admin/user" class="btn btn-light">Cancel</a> &nbsp;
+                            <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-">Save changes</button> &nbsp;
+                            <button v-if="id" v-on:click="remove" type="button" class="btn btn-danger glow mb-1 mb-sm-0 mr-0 mr-sm-">Delete</button>
                         </div>
                     </div>
                 </form>
@@ -86,56 +88,76 @@ $(function() {
     new Vue({
         el: "#app",
         data: {
-            user: {}
+            user: {{{ user }}},
+            id: '{{ id }}'
         },
         methods: {
             submit: function(e) {
                 event.preventDefault();
-                console.log(this.user);
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/user',
-                    data: JSON.stringify(this.user),
-                    contentType: 'application/json'
-                }).done(function(e) {
-
-                    // if (e.success) {
-                    //     window.location.assign(e.redirect);
-                    // } else {
-                    //     $('#loginError').show();
-                    // }
-                }).fail(function() {
-                    // $('#loginError').show();
-                });
+                if (this.id) {
+                    delete this.user._id;
+                    $.ajax({
+                        type: 'PUT',
+                        url: '/api/user/' + this.id,
+                        data: JSON.stringify(this.user),
+                        contentType: 'application/json'
+                    }).done(function(e) {
+                        window.location = '/admin/user';
+                    }).fail(function() {
+                        //
+                    });
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/user',
+                        data: JSON.stringify(this.user),
+                        contentType: 'application/json'
+                    }).done(function(e) {
+                        window.location = '/admin/user';
+                    }).fail(function() {
+                        //
+                    });
+                }
+            },
+            remove: function(){
+                event.preventDefault();
+                if(confirm('Are you sure to delete?')){
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/api/user/' + this.id
+                    }).done(function(e) {
+                        window.location = '/admin/user';
+                    }).fail(function() {
+                        //
+                    });
+                }
             }
         }
     });
-    // $("#adminCreateUser").submit(function(e) {
-    //     e.preventDefault();
-    //     var username = $('#txtUserName').val(),
-    //         password = $('#txtPassword').val();
-    //     if (username && password) {
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: '/login',
-    //             data: JSON.stringify({
-    //                 username: username,
-    //                 password: password
-    //             }),
-    //             contentType: "application/json",
-    //             dataType: 'json'
-    //         }).done(function(e) {
-    //             if (e.success) {
-    //                 window.location.assign(e.redirect);
-    //             } else {
-    //                 $('#loginError').show();
-    //             }
-    //         }).fail(function() {
-    //             $('#loginError').show();
-    //         });
-    //     } else {
-    //         $('#loginError').show();
-    //     }
-    // });
 });
 </script>
+<!-- <script type="text/javascript">
+new Vue({
+    el: '#app',
+    delimiters: ['${', '}'],
+    data: {
+        users: []
+    },
+    created() {
+        this.fetch();
+    },
+    methods: {
+        fetch() {
+            $.get('/api/user').then(data => {
+                this.users = data;
+                console.log(this.users);
+            })
+        }
+    },
+    computed: {
+        loading: function() {
+            return this.users.length === 0;
+        }
+    }
+});
+</script> -->

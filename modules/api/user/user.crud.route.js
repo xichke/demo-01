@@ -1,5 +1,6 @@
 'use strict';
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+    _ = require('lodash');
 
 module.exports = function(app) {
     let model = app.models.User;
@@ -34,8 +35,8 @@ module.exports = function(app) {
         //list
         .get(async (req, res, next) => {
             try {
-                let items = await model.find({}, 'name created');
-                res.status(200).json(items);
+                let items = await model.find({}, '-password -__v').lean();
+                return res.status(200).send(items);
             } catch (err) {
                 res.status(500).json({
                     err: err.message

@@ -23,7 +23,7 @@ module.exports = function(app) {
         //create
         .post(async (req, res, next) => {
             try {
-                let item = await new model(req.body).save();
+                let item = await new model(req.body).save().lean();
                 res.status(201).json(item);
             } catch (err) {
                 res.status(500).json({
