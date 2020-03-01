@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{{title}}</title>
+    <!-- icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- responsive -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!-- vendor -->
+    <link rel="stylesheet" type="text/css" href="/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/plugins/forms/validation/form-validation.css">
+    <link rel="stylesheet" type="text/css" href="/vendors/css/forms/select/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="/vendors/css/pickers/pickadate/pickadate.css">
+    <link rel="stylesheet" type="text/css" href="/vendors/css/tables/datatable/datatables.min.css">
+
+    <!-- theme -->
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/css/themes/dark-layout.css">
+    <link rel="stylesheet" type="text/css" href="/css/themes/semi-dark-layout.css">
+
+    <!-- page -->
+    <link rel="stylesheet" type="text/css" href="/css/core/menu/menu-types/horizontal-menu.css">
+    <link rel="stylesheet" type="text/css" href="/css/pages/page-users.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/slick.css">
+    <link rel="stylesheet" type="text/css" href="/css/site.css">
+
+    <!-- Vendor-->
+    <script src="/vendors/js/vendors.min.js"></script>
+    <script src="/vendors/js/ui/jquery.sticky.js"></script>
+    <script src="/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="/vendors/js/forms/validation/jqBootstrapValidation.js"></script>
+    <script src="/vendors/js/charts/apexcharts.min.js"></script>
+    <script src="/vendors/js/extensions/dragula.min.js"></script>
+    <script src="/vendors/js/pickers/pickadate/picker.js"></script>
+    <script src="/vendors/js/pickers/pickadate/picker.date.js"></script>
+    <script src="/vendors/js/tables/datatable/datatables.min.js"></script>
+    <script src="/vendors/js/tables/datatable/dataTables.bootstrap4.min.js"></script>
+
+    <script src="/js/vue.js"></script>
+
+    <!-- BEGIN: Theme JS-->
+    <script src="/js/scripts/configs/horizontal-menu.min.js"></script>
+    <script src="/js/core/app-menu.js"></script>
+    <script src="/js/core/app.js"></script>
+    <script src="/js/scripts/components.min.js"></script>
+    <script src="/js/scripts/footer.min.js"></script>
+    <script src="/js/scripts/customizer.min.js"></script>
+    <!-- END: Theme JS-->
+
+    <!-- BEGIN: Page JS-->
+    <script src="/js/scripts/pages/dashboard-analytics.min.js"></script>
+    <!-- <script src="/js/scripts/pages/page-users.min.js"></script> -->
+    <script src="/js/scripts/navs/navs.min.js"></script>
+    <!-- END: Page JS-->
+</head>
+
+<body>
+   
+</body>
+<body class="horizontal-layout horizontal-menu 2-columns footer-static menu-expanded pace-done navbar-sticky" data-open="hover" data-menu="horizontal-menu" data-col="2-columns">
+    {{> nav}}
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-body">
+             {{{body}}}
+            </div>
+        </div>
+    </div>
+</body>

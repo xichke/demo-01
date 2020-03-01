@@ -11,14 +11,15 @@ const config = require('config'),
 	exphbs = require('express-handlebars'),
 	bodyParser = require('body-parser'),
 	utils = require('./utils'),
-	views = (() => {
-		let result = {};
-		utils.match('modules/**/*.html').forEach(e => {
-			let name = e.split('/').slice(-2).reverse().pop();
-			result[name] = `../${e}`;
-		})
-		return result;
-	})();
+	views = utils.match('modules/**/*.html').map(e => `../${e}`);
+// views = (() => {
+// 	let result = {};
+// 	utils.match('modules/**/*.html').forEach(e => {
+// 		let name = e.split('/').slice(-2).reverse().pop();
+// 		result[name] = `../${e}`;
+// 	})
+// 	return result;
+// })();
 module.exports = function(app) {
 	app.set('trust proxy', 1);
 	if (config.morgan)
@@ -49,8 +50,15 @@ module.exports = function(app) {
 	app.use((req, res, next) => {
 		var _render = res.render;
 		res.render = function(view, options, fn) {
-			if (views[view])
-				view = views[view];
+			if (!/404/.test(view)) {
+				let p = `/${view}.html|/${view}/index.html`,
+					parttern = new RegExp(p, 'g'),
+					match = views.find(e => {
+						return parttern.test(e);
+					});
+				console.log('===========>>> match : ', match, parttern);
+				view = match || view;
+			}
 			_render.call(this, view, options, fn);
 		}
 		next();

@@ -6,4 +6,14 @@ module.exports = function(app) {
 			layout: 'admin'
 		});
 	});
+	app.get('/admin/user/edit', (req, res) => {
+		res.render('admin.user/edit', {
+			layout: 'admin'
+		});
+	});
+	app.get('/admin/user/create', (req, res) => {
+		res.render('admin.user/edit', {
+			layout: 'admin'
+		});
+	});
 };

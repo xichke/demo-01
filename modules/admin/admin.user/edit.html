@@ -1,0 +1,141 @@
+<section id="app" class="users-edit">
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <form novalidate v-on:submit="submit" action="#">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Username</label>
+                                    <input v-model="user.username" type="text" class="form-control" placeholder="Username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Password</label>
+                                    <input v-model="user.password" type="password" class="form-control" placeholder="Username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Name</label>
+                                    <input v-model="user.name" type="text" class="form-control" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>E-mail</label>
+                                    <input v-model="user.email" type="email" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Phone number</label>
+                                    <input v-model="user.phone" type="text" class="form-control" placeholder="Phone number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <label>Role</label>
+                                <select class="form-control">
+                                    <option>User</option>
+                                    <option>Staff</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Status</label>
+                                <select class="form-control">
+                                    <option>active</option>
+                                    <option>disabled</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Birthday</label>
+                                    <input v-model="user.dob" type="email" class="form-control birthdate-picker" placeholder="Birthday yyy-mm-dd">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Address</label>
+                                    <input v-model="user.address" type="text" class="form-control" placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Website</label>
+                                    <input v-model="user.website" type="text" class="form-control" placeholder="Website">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                            <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-1">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+$(function() {
+    new Vue({
+        el: "#app",
+        data: {
+            user: {}
+        },
+        methods: {
+            submit: function(e) {
+                event.preventDefault();
+                console.log(this.user);
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/user',
+                    data: JSON.stringify(this.user),
+                    contentType: 'application/json'
+                }).done(function(e) {
+
+                    // if (e.success) {
+                    //     window.location.assign(e.redirect);
+                    // } else {
+                    //     $('#loginError').show();
+                    // }
+                }).fail(function() {
+                    // $('#loginError').show();
+                });
+            }
+        }
+    });
+    // $("#adminCreateUser").submit(function(e) {
+    //     e.preventDefault();
+    //     var username = $('#txtUserName').val(),
+    //         password = $('#txtPassword').val();
+    //     if (username && password) {
+    //         $.ajax({
+    //             type: 'POST',
+    //             url: '/login',
+    //             data: JSON.stringify({
+    //                 username: username,
+    //                 password: password
+    //             }),
+    //             contentType: "application/json",
+    //             dataType: 'json'
+    //         }).done(function(e) {
+    //             if (e.success) {
+    //                 window.location.assign(e.redirect);
+    //             } else {
+    //                 $('#loginError').show();
+    //             }
+    //         }).fail(function() {
+    //             $('#loginError').show();
+    //         });
+    //     } else {
+    //         $('#loginError').show();
+    //     }
+    // });
+});
+</script>
