@@ -21,6 +21,10 @@ let _schema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Salon'
   }],
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   updated: {
     type: Date
   },
