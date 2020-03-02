@@ -138,7 +138,7 @@ $(function() {
 			},
 			onKeyPress: function(e) {
 				if (e === '{enter}') {
-
+					alert($('#output').val());
 				}
 			},
 			layout: {

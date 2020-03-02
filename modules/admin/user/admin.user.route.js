@@ -3,13 +3,14 @@
 module.exports = function(app) {
 	app.get('/admin/user', async (req, res) => {
 		let users = await app.models.User.find({}, '-password -__v').lean();
+		console.log('====>>> ', users);
 		res.render('admin/user', {
 			layout: 'admin',
 			users: users
 		});
 	});
 	app.get('/admin/user/create', (req, res) => {
-		res.render('admin.user/edit', {
+		res.render('admin/user/edit', {
 			layout: 'admin',
 			id: '',
 			user: '{}'
@@ -23,7 +24,7 @@ module.exports = function(app) {
 			if (!user) {
 				return res.status(404).send('not found');
 			}
-			res.render('admin.user/edit', {
+			res.render('admin/user/edit', {
 				layout: 'admin',
 				id: `${req.params.id}`,
 				user: JSON.stringify(user)

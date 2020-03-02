@@ -138,28 +138,3 @@ $(function() {
     });
 });
 </script>
-<!-- <script type="text/javascript">
-new Vue({
-    el: '#app',
-    delimiters: ['${', '}'],
-    data: {
-        users: []
-    },
-    created() {
-        this.fetch();
-    },
-    methods: {
-        fetch() {
-            $.get('/api/user').then(data => {
-                this.users = data;
-                console.log(this.users);
-            })
-        }
-    },
-    computed: {
-        loading: function() {
-            return this.users.length === 0;
-        }
-    }
-});
-</script> -->

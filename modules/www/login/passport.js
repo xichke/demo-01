@@ -14,20 +14,19 @@ module.exports = (app) => {
 	});
 	passport.deserializeUser((id, done) => User.findOne({
 		_id: id
-	}, 'username', done));
+	}, 'username roles', done));
 	passport.use('mongo',
 		new LocalStrategy({
 			usernameField: 'username',
 			passwordField: 'password',
 			passReqToCallback: true
 		}, async (req, username, password, done) => {
-			console.log('=====>>>>>> here ', req.originalUrl);
 			try {
-				console.log('=====>>>>>> query ');
 				let user = await User.findOne({
 					username: username
-				});
-				if (user) {
+				}).lean();
+				console.log('=>>>>>', user);
+				if (user && user.isActive) {
 					if (!bcrypt.compareSync(password, user.password)) {
 						return done('Wrong password');
 					}
@@ -57,5 +56,14 @@ module.exports = (app) => {
 	}));
 	app.use(passport.initialize());
 	app.use(passport.session());
+	app.use(function(req, res, next) {
+		if (req.user) {
+			res.locals.user = {
+				username: req.user.username,
+				role: req.user.roles.join(' ')
+			};
+		}
+		next();
+	});
 	app.set('passport', passport);
 };

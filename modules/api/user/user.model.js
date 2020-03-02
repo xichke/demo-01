@@ -5,7 +5,12 @@ const config = require('config'),
 	mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
-	name: {
+	firstName: {
+		type: String,
+		trim: true,
+		default: ''
+	},
+	lastName: {
 		type: String,
 		trim: true,
 		default: ''
@@ -15,8 +20,7 @@ var UserSchema = new mongoose.Schema({
 		unique: 'username has already existed',
 		required: 'username is required',
 		lowercase: true,
-		trim: true,
-		index: true
+		trim: true
 	},
 	email: {
 		type: String,
@@ -24,11 +28,6 @@ var UserSchema = new mongoose.Schema({
 		default: ''
 	},
 	address: {
-		type: String,
-		trim: true,
-		default: ''
-	},
-	website: {
 		type: String,
 		trim: true,
 		default: ''
@@ -45,24 +44,17 @@ var UserSchema = new mongoose.Schema({
 	roles: {
 		type: [{
 			type: String,
-			enum: ['client', 'admin']
+			enum: ['root', 'admin', 'client']
 		}],
-		default: ['client']
+		default: []
 	},
-	client: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Client'
+	isActive: {
+		type: Boolean,
+		default: true
 	},
-	salon: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Salon'
-	},
-	status: {
-		type: [{
-			type: String,
-			enum: ['active', 'disabled']
-		}],
-		default: ['active']
+	isRoot: {
+		type: Boolean,
+		default: false
 	},
 	updated: {
 		type: Date
@@ -71,15 +63,23 @@ var UserSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now
 	}
+}, {
+	toJSON: {
+		virtuals: true
+	},
+	toObject: {
+		virtuals: true
+	}
 });
 
-UserSchema.pre('save', function(next) {
-	console.log('===>>>> ', this.password, config.saltRounds);
-	bcrypt.hash(this.password, config.saltRounds, (err, hash) => {
-		console.log('===>>>> aaaa', hash);
-		this.password = hash;
-		next();
-	});
+UserSchema.pre('save', async function(next) {
+	try {
+		if (this.isModified('password')) {
+			this.password = await bcrypt.hash(this.password, config.saltRounds);
+		}
+	} catch (err) {
+		next(err);
+	}
 });
 
 UserSchema.methods = {

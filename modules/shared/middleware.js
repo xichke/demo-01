@@ -12,14 +12,6 @@ const config = require('config'),
 	bodyParser = require('body-parser'),
 	utils = require('./utils'),
 	views = utils.match('modules/**/*.html').map(e => `../${e}`);
-// views = (() => {
-// 	let result = {};
-// 	utils.match('modules/**/*.html').forEach(e => {
-// 		let name = e.split('/').slice(-2).reverse().pop();
-// 		result[name] = `../${e}`;
-// 	})
-// 	return result;
-// })();
 module.exports = function(app) {
 	app.set('trust proxy', 1);
 	if (config.morgan)

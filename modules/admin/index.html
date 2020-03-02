@@ -11,10 +11,12 @@
                 <div class="card-content">
                     <div class="card-body">
                         <div class="badge-circle badge-circle-lg badge-circle-light-info mx-auto my-1">
-                            <i class="bx bxs-user-plus font-medium-5"></i>
+                            <a href="/admin/user">
+                                <i class="bx bxs-user-plus font-medium-5"></i>
+                            </a>
                         </div>
-                        <p class="text-muted mb-0 line-ellipsis">Users</p>
-                        <h2 class="mb-0">{{userCount}}</h2>
+                        <p class="text-muted mb-0 line-ellipsis">System Users</p>
+                        <h2 class="mb-0">{{count.user}}</h2>
                     </div>
                 </div>
             </div>
@@ -24,10 +26,12 @@
                 <div class="card-content">
                     <div class="card-body">
                         <div class="badge-circle badge-circle-lg badge-circle-light-warning mx-auto my-1">
-                            <i class="bx bxs-user-check font-medium-5"></i>
+                            <a href="/admin/client">
+                                <i class="bx bxs-user-check font-medium-5"></i>
+                            </a>
                         </div>
                         <p class="text-muted mb-0 line-ellipsis">Clients</p>
-                        <h2 class="mb-0">{{clientCount}}</h2>
+                        <h2 class="mb-0">{{count.client}}</h2>
                     </div>
                 </div>
             </div>
@@ -39,8 +43,8 @@
                         <div class="badge-circle badge-circle-lg badge-circle-light-danger mx-auto my-1">
                             <i class="bx bx-message font-medium-5"></i>
                         </div>
-                        <p class="text-muted mb-0 line-ellipsis">Comments</p>
-                        <h2 class="mb-0">29</h2>
+                        <p class="text-muted mb-0 line-ellipsis">Salons</p>
+                        <h2 class="mb-0">{{count.salon}}</h2>
                     </div>
                 </div>
             </div>
@@ -52,8 +56,8 @@
                         <div class="badge-circle badge-circle-lg badge-circle-light-primary mx-auto my-1">
                             <i class="bx bx-money font-medium-5"></i>
                         </div>
-                        <p class="text-muted mb-0 line-ellipsis">Sales</p>
-                        <h2 class="mb-0">72</h2>
+                        <p class="text-muted mb-0 line-ellipsis">Transaction</p>
+                        <h2 class="mb-0">{{count.transaction}}</h2>
                     </div>
                 </div>
             </div>
@@ -65,8 +69,8 @@
                         <div class="badge-circle badge-circle-lg badge-circle-light-success mx-auto my-1">
                             <i class="bx bx-purchase-tag font-medium-5"></i>
                         </div>
-                        <p class="text-muted mb-0 line-ellipsis">Purchase</p>
-                        <h2 class="mb-0">65</h2>
+                        <p class="text-muted mb-0 line-ellipsis">End-Users</p>
+                        <h2 class="mb-0">{{count.nuser}}</h2>
                     </div>
                 </div>
             </div>

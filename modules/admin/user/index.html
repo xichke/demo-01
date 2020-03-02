@@ -52,7 +52,6 @@
                                     <th>username</th>
                                     <th>name</th>
                                     <th>last activity</th>
-                                    <th>verified</th>
                                     <th>role</th>
                                     <th>status</th>
                                     <th>edit</th>
@@ -62,13 +61,18 @@
                                 {{#each users}}
                                 <tr>
                                     <td>{{_id}}</td>
-                                    <td><a href="/">{{username}}</a>
-                                    </td>
-                                    <td>{{name}}</td>
+                                    <td>{{username}}</td>
+                                    <td>{{firstName}} {{lastName}}</td>
                                     <td>30/04/2019</td>
                                     <td>No</td>
                                     <td>Staff</td>
-                                    <td><span class="badge badge-light-success">{{status}}</span></td>
+                                    <td>
+                                        {{#if isActive}}
+                                        <span class="badge badge-light-success">active</span>
+                                        {{else}}
+                                        <span class="badge badge-light-danger">dsiabled</span>
+                                        {{/if}}
+                                    </td>
                                     <td><a href="/admin/user/edit/{{_id}}"><i class="bx bx-edit-alt"></i></a></td>
                                 </tr>
                                 {{/each}}
