@@ -14,6 +14,7 @@
         </div>
     </div>
 </div>
+<i id="fullscreen" class="zmdi zmdi-fullscreen zmdi-hc-4x"></i>
 <style type="text/css">
 html body {
     overflow: hidden;
@@ -28,14 +29,17 @@ html body {
 }
 
 #preview {
-    border: 1px solid red;
-    width:100%;
+    width: 100%;
+    height: 534px;
 }
+#fullscreen{position: absolute; top:10px; right:10px;}
 </style>
 <script type="text/javascript">
 $(function() {
-    $('#btnQRCode').click(function() {
-        // $('#phoneInput').s
+    $('#fullscreen').click(function(){
+        document.documentElement.webkitRequestFullScreen();
+    });
+    function initQRCode() {
         let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
         scanner.addListener('scan', function(content) {
             console.log(content);
@@ -49,6 +53,18 @@ $(function() {
         }).catch(function(e) {
             console.error(e);
         });
+    }
+    var qr = false;
+    $('#btnQRCode').click(function() {
+        if (qr) {
+            $('#preview').addClass('toshow').removeClass('animated flipInY');
+            $('#phoneInput').addClass('animated flipInY').removeClass('toshow');
+        } else {
+            initQRCode();
+            $('#phoneInput').addClass('toshow').removeClass('animated flipInY');
+            $('#preview').addClass('animated flipInY').removeClass('toshow');
+        }
+        qr = !qr;
     });
 });
 </script>
