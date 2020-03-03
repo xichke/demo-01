@@ -1,5 +1,5 @@
 'use strict';
-const mongoose = require('mongoose');
+const libphone = require('libphonenumber-js');
 
 module.exports = function(app) {
 	app.get('/checkin', (req, res) => {
@@ -9,15 +9,30 @@ module.exports = function(app) {
 			layout: 'client'
 		});
 	});
-	app.post('/checkin', (req, res) => {
-		// let item = app.models.
-		if (!err) {
-			res.send({
-				success: true,
-				redirect: req.query.ref || '/'
+	app.post('/checkin', async (req, res) => {
+		try {
+			let phone = libphone
+				.parsePhoneNumberFromString(req.body.phone, 'US')
+				.format('E.164');
+			let salon = await app.models.Salon.findOne({
+				admin: req.user._id
+			}).lean();
+			let nuser = await app.models.NUser.findOne({
+				phone: phone
+			}).lean();
+			if (!nuser) {
+				new app.models.NUser({
+					phone: phone
+				}).save();
+				return res.status(201).json({
+					success: true
+				});
+			}
+			res.json({
+				success: true
 			});
-		} else {
-			res.send({
+		} catch (err) {
+			res.status(500).send({
 				success: false
 			});
 		}

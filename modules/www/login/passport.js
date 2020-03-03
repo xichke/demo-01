@@ -25,7 +25,6 @@ module.exports = (app) => {
 				let user = await User.findOne({
 					username: username
 				}).lean();
-				console.log('=>>>>>', user);
 				if (user && user.isActive) {
 					if (!bcrypt.compareSync(password, user.password)) {
 						return done('Wrong password');

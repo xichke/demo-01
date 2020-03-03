@@ -131,14 +131,14 @@ $(function() {
 		let keyboard = new Keyboard({
 			maxLength: 10,
 			onChange: function(input) {
-				var mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+				var mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
 				input = vanillaTextMask.conformToMask(input, mask).conformedValue;
-				document.querySelector('#output').value = input;
+				document.querySelector('#txtPhone').value = input;
 				console.log("Input changed", input);
 			},
 			onKeyPress: function(e) {
 				if (e === '{enter}') {
-					alert($('#output').val());
+					checkin();
 				}
 			},
 			layout: {
@@ -146,6 +146,34 @@ $(function() {
 			},
 			theme: "hg-theme-default hg-layout-numeric numeric-theme"
 		});
+	}
+
+	function checkin() {
+		$('.loading').show();
+		var phone = $('#txtPhone').val();
+		var mash = new RegExp(['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/].join(''));
+		if (!phone || phone.indexOf('_') >= 0) {
+			$('#error').show();
+		} else {
+			$.ajax({
+				type: 'POST',
+				url: '/checkin',
+				data: JSON.stringify({
+					phone: phone
+				}),
+				contentType: "application/json",
+				dataType: 'json'
+			}).done(function(e) {
+				$('.loading').hide();
+				if (e.success) {
+					//
+				} else {
+					//
+				}
+			}).fail(function() {
+				$('.loading').hide();
+			});
+		}
 	}
 
 	$("#loginForm").submit(function(e) {
