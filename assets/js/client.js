@@ -130,11 +130,10 @@ $(function() {
 		let Keyboard = window.SimpleKeyboard.default;
 		let keyboard = new Keyboard({
 			maxLength: 10,
-			onChange: function(input) {
+			onChange: function(number) {
 				var mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
-				input = vanillaTextMask.conformToMask(input, mask).conformedValue;
-				document.querySelector('#txtPhone').value = input;
-				console.log("Input changed", input);
+				number = vanillaTextMask.conformToMask(number, mask).conformedValue;
+				$('#txtPhone').val(number);
 			},
 			onKeyPress: function(e) {
 				if (e === '{enter}') {
@@ -142,19 +141,18 @@ $(function() {
 				}
 			},
 			layout: {
-				default: ["1 2 3", "4 5 6", "7 8 9", "{bksp} 0 {enter}"]
+				default: ["1 2 3", "4 5 6", "7 8 9", "{bksp} 0 "]
 			},
 			theme: "hg-theme-default hg-layout-numeric numeric-theme"
 		});
 	}
 
 	function checkin() {
-		$('.loading').show();
 		var phone = $('#txtPhone').val();
-		var mash = new RegExp(['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/].join(''));
 		if (!phone || phone.indexOf('_') >= 0) {
 			$('#error').show();
 		} else {
+			$('.loading').show();
 			$.ajax({
 				type: 'POST',
 				url: '/checkin',

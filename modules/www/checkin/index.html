@@ -2,6 +2,7 @@
     <div class="color-overlay"></div>
     <div class="container-login">
         <div class="wrap-login">
+            <i id="fullscreen" class="zmdi zmdi-fullscreen zmdi-hc-4x"></i>
             <section id="phoneInput">
                 <div class="wrap-input">
                     <input id="txtPhone" class="input" type="text" readonly="readonly">
@@ -32,7 +33,6 @@
         </div>
     </div>
 </div>
-<i id="fullscreen" class="zmdi zmdi-fullscreen zmdi-hc-4x"></i>
 <style type="text/css">
 html body {
     overflow: hidden;
@@ -53,14 +53,45 @@ html body {
 
 #fullscreen {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 30px;
+    right: 30px;
+    color: #fff;
 }
 </style>
 <script type="text/javascript">
 $(function() {
+    document.addEventListener('webkitfullscreenchange', function() { //mozfullscreenchange msfullscreenchange fullscreenchange
+        $('#fullscreen').toggleClass('zmdi-fullscreen toshow');
+    });
     $('#fullscreen').click(function() {
-        document.documentElement.webkitRequestFullScreen();
+        var elem = document.documentElement;
+        if ($('#fullscreen').hasClass('zmdi-fullscreen')) {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+        }
+    });
+    document.documentElement.addEventListener('touchstart', function(event) {
+        event.preventDefault();
+    });
+    document.documentElement.addEventListener('touchmove', function(event) {
+        event.preventDefault();
     });
 
     function initQRCode() {

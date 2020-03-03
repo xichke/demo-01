@@ -15,11 +15,11 @@ module.exports = function(app) {
 				.parsePhoneNumberFromString(req.body.phone, 'US')
 				.format('E.164');
 			let salon = await app.models.Salon.findOne({
-				admin: req.user._id
-			}).lean();
-			let nuser = await app.models.NUser.findOne({
-				phone: phone
-			}).lean();
+					admin: req.user._id
+				}).lean(),
+				nuser = await app.models.NUser.findOne({
+					phone: phone
+				}, '-_id phone name').lean();
 			if (!nuser) {
 				new app.models.NUser({
 					phone: phone
@@ -29,7 +29,8 @@ module.exports = function(app) {
 				});
 			}
 			res.json({
-				success: true
+				success: true,
+				user: nuser
 			});
 		} catch (err) {
 			res.status(500).send({
