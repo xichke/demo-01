@@ -17,11 +17,23 @@ let _schema = new Schema({
     type: String,
     trim: true
   },
-  fb_page: {
+  fb: {
     type: String,
     trim: true
   },
-  youtube_channel: {
+  youtube: {
+    type: String,
+    trim: true
+  },
+  googlePlus: {
+    type: String,
+    trim: true
+  },
+  linkedin: {
+    type: String,
+    trim: true
+  },
+  instagram: {
     type: String,
     trim: true
   },
@@ -33,6 +45,18 @@ let _schema = new Schema({
     type: String,
     trim: true
   },
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number]
+    }
+  },
+  isActive: Boolean,
   updated: {
     type: Date
   },

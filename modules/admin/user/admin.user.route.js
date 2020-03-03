@@ -3,8 +3,8 @@
 module.exports = function(app) {
 	app.get('/admin/user', async (req, res) => {
 		let users = await app.models.User.find({}, '-password -__v').lean();
-		console.log('====>>> ', users);
 		res.render('admin/user', {
+			title: 'User Management',
 			layout: 'admin',
 			users: users
 		});

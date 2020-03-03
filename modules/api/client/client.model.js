@@ -13,6 +13,10 @@ let _schema = new Schema({
     type: String,
     trim: true
   },
+  email: {
+    type: String,
+    trim: true
+  },
   phone: {
     type: String,
     trim: true
@@ -25,6 +29,7 @@ let _schema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  isActive: Boolean,
   updated: {
     type: Date
   },

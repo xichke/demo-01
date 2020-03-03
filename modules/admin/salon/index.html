@@ -3,7 +3,7 @@
         <div class="row py-2 mb-2">
             <div class="col-12 col-sm-6 col-lg-9"></div>
             <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-center">
-                <a href="/admin/client/create" class="btn btn-primary btn-block glow users-list-clear mb-0">Add a new client</a>
+                <a href="/admin/salon/create" class="btn btn-primary btn-block glow users-list-clear mb-0">Add a new salon</a>
             </div>
         </div>
     </div>
@@ -16,24 +16,31 @@
                             <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th>username</th>
                                     <th>name</th>
-                                    <th>last activity</th>
-                                    <th>role</th>
+                                    <th>address</th>
+                                    <th>phone number</th>
                                     <th>status</th>
                                     <th>edit</th>
                                 </tr>
                             </thead>
-                            <tbody> {{#each clients}} <tr>
+                            <tbody>
+                                {{#each salons}}
+                                <tr>
                                     <td>{{_id}}</td>
-                                    <td>{{username}}</td>
-                                    <td>{{firstName}} {{lastName}}</td>
-                                    <td>30/04/2019</td>
-                                    <td>No</td>
-                                    <td>Staff</td>
-                                    <td> {{#if isActive}} <span class="badge badge-light-success">active</span> {{else}} <span class="badge badge-light-danger">dsiabled</span> {{/if}} </td>
-                                    <td><a href="/admin/client/edit/{{_id}}"><i class="bx bx-edit-alt"></i></a></td>
-                                </tr> {{/each}} </tbody>
+                                    <td>{{name}}</td>
+                                    <td>{{address}}</td>
+                                    <td>{{phone}}</td>
+                                    <td>
+                                        {{#if isActive}}
+                                        <span class="badge badge-light-success">active</span>
+                                        {{else}}
+                                        <span class="badge badge-light-danger">dsiabled</span>
+                                        {{/if}}
+                                    </td>
+                                    <td><a href="/admin/salon/edit/{{_id}}"><i class="bx bx-edit-alt"></i></a></td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
                         </table>
                     </div>
                 </div>

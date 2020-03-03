@@ -38,3 +38,5 @@ db.logmsg.findOne()
 }
 ```
 
+`window.navigator.standalone`
+

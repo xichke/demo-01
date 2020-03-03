@@ -1,4 +1,4 @@
-<section id="app" class="clients-edit">
+<section id="app" class="salons-edit">
     <div class="card">
         <div class="card-content">
             <div class="card-body">
@@ -8,27 +8,51 @@
                             <div class="form-group">
                                 <div class="controls">
                                     <label>Name</label>
-                                    <input v-model="client.name" type="text" class="form-control" placeholder="First Name">
+                                    <input v-model="salon.name" type="text" class="form-control" placeholder="Name">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="controls">
                                     <label>E-mail</label>
-                                    <input v-model="client.email" type="email" class="form-control" placeholder="Email">
+                                    <input v-model="salon.email" type="email" class="form-control" placeholder="Email">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="controls">
                                     <label>Phone number</label>
-                                    <input v-model="client.phone" type="text" class="form-control" placeholder="Phone number">
+                                    <input v-model="salon.phone" type="text" class="form-control" placeholder="Phone number">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Address</label>
+                                    <input v-model="salon.address" type="text" class="form-control" placeholder="Address">
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
                                 <div class="controls">
-                                    <label>Address</label>
-                                    <input v-model="client.address" type="text" class="form-control" placeholder="Address">
+                                    <label>Google placeId</label>
+                                    <input v-model="salon.placeId" type="text" class="form-control" placeholder="Google placeId">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Facebook</label>
+                                    <input v-model="salon.fb" type="text" class="form-control" placeholder="Facebook">
+                                </div>
+                                <div class="controls">
+                                    <label>Google+</label>
+                                    <input v-model="salon.googlePlus" type="text" class="form-control" placeholder="Google+">
+                                </div>
+                                <div class="controls">
+                                    <label>Linkedin</label>
+                                    <input v-model="salon.linkedin" type="text" class="form-control" placeholder="Linkedin">
+                                </div>
+                                <div class="controls">
+                                    <label>Instagram</label>
+                                    <input v-model="salon.instagram" type="text" class="form-control" placeholder="Instagram">
                                 </div>
                             </div>
                         </div>
@@ -37,7 +61,7 @@
                         <div class="col-12 col-sm-6">
                             <fieldset>
                                 <div class="checkbox checkbox-secondary checkbox-glow">
-                                    <input v-model="client.isActive" type="checkbox" id="isActive">
+                                    <input v-model="salon.isActive" type="checkbox" id="isActive">
                                     <label for="isActive">isActive</label>
                                 </div>
                             </fieldset>
@@ -45,7 +69,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                            <a href="/admin/client" class="btn btn-light">Cancel</a> &nbsp; <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-">Save changes</button> &nbsp; <button v-if="id" v-on:click="remove" type="button" class="btn btn-danger glow mb-1 mb-sm-0 mr-0 mr-sm-">Delete</button>
+                            <a href="/admin/salon" class="btn btn-light">Cancel</a> &nbsp; <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-">Save changes</button> &nbsp; <button v-if="id" v-on:click="remove" type="button" class="btn btn-danger glow mb-1 mb-sm-0 mr-0 mr-sm-">Delete</button>
                         </div>
                     </div>
                 </form>
@@ -58,32 +82,32 @@ $(function() {
     new Vue({
         el: "#app",
         data: {
-            client: {{{ client }}},
+            salon: {{{ salon }}},
             id: '{{ id }}'
         },
         methods: {
             submit: function(e) {
                 event.preventDefault();
                 if (this.id) {
-                    delete this.client._id;
+                    delete this.salon._id;
                     $.ajax({
                         type: 'PUT',
-                        url: '/api/client/' + this.id,
-                        data: JSON.stringify(this.client),
+                        url: '/api/salon/' + this.id,
+                        data: JSON.stringify(this.salon),
                         contentType: 'application/json'
                     }).done(function(e) {
-                        window.location = '/admin/client';
+                        window.location = '/admin/salon';
                     }).fail(function() {
                         //
                     });
                 } else {
                     $.ajax({
                         type: 'POST',
-                        url: '/api/client',
-                        data: JSON.stringify(this.client),
+                        url: '/api/salon',
+                        data: JSON.stringify(this.salon),
                         contentType: 'application/json'
                     }).done(function(e) {
-                        window.location = '/admin/client';
+                        window.location = '/admin/salon';
                     }).fail(function() {
                         //
                     });
@@ -94,9 +118,9 @@ $(function() {
                 if (confirm('Are you sure to delete?')) {
                     $.ajax({
                         type: 'DELETE',
-                        url: '/api/client/' + this.id
+                        url: '/api/salon/' + this.id
                     }).done(function(e) {
-                        window.location = '/admin/client';
+                        window.location = '/admin/salon';
                     }).fail(function() {
                         //
                     });

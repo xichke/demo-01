@@ -5,6 +5,7 @@ module.exports = function(app) {
 		let clients = await app.models.Client.find({}, '-password -__v').lean();
 		res.render('admin/client', {
 			layout: 'admin',
+			title: 'Client Management',
 			clients: clients
 		});
 	});
