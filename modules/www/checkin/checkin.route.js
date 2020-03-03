@@ -9,4 +9,17 @@ module.exports = function(app) {
 			layout: 'client'
 		});
 	});
+	app.post('/checkin', (req, res) => {
+		// let item = app.models.
+		if (!err) {
+			res.send({
+				success: true,
+				redirect: req.query.ref || '/'
+			});
+		} else {
+			res.send({
+				success: false
+			});
+		}
+	});
 };

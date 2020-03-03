@@ -56,6 +56,10 @@ let _schema = new Schema({
       type: [Number]
     }
   },
+  admin: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   isActive: Boolean,
   updated: {
     type: Date
