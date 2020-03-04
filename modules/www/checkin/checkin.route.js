@@ -19,18 +19,21 @@ module.exports = function(app) {
 				}).lean(),
 				nuser = await app.models.NUser.findOne({
 					phone: phone
-				}, '-_id phone name').lean();
+				}, '_id phone name').lean();
 			if (!nuser) {
-				new app.models.NUser({
+				nuser = await new app.models.NUser({
 					phone: phone
 				}).save();
-				return res.status(201).json({
-					success: true
-				});
 			}
+			console.log(nuser);
+			let transaction = await app.models.Transaction({
+				nUserId: nuser._id,
+				salonId: salon._id
+			}).save();
 			res.json({
 				success: true,
-				user: nuser
+				message: `Welcome ${nuser.name ? nuser.name : ''} to ${salon.name}. <br/> You checked in successfully.`,
+				point: ''
 			});
 		} catch (err) {
 			res.status(500).send({

@@ -3,52 +3,32 @@
     <div class="container-login">
         <div class="wrap-login">
             <i id="fullscreen" class="zmdi zmdi-fullscreen zmdi-hc-4x"></i>
-            <section id="phoneInput">
+            <section id="phoneInput" class="">
                 <div class="wrap-input">
                     <input id="txtPhone" class="input" type="text" readonly="readonly">
                     <span class="focus-input" data-placeholder="&#xf2be;"></span>
                 </div>
-                <div class="simple-keyboard"></div>
+                <div id="spin" class="sk-wave toshow">
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                </div>
+                <section id="welcome">
+                    <h3 id="message"></h3>
+                    <img class="round" width="100" height="100" avatar="a d">
+                    <img class="round" width="100" height="100" avatar="b agd">
+                    <img class="round" width="100" height="100" avatar="cc aedd">
+                </section>
+                <div id="keyboard" class="simple-keyboard"></div>
             </section>
-            <video id="preview" class="toshow"></video>
-            <img id="btnQRCode" src="/images/qr-code-white.png" alt="QR-Code" class="qrcode">
-        </div>
-    </div>
-</div>
-<div class="loading lock toshow">
-    <div class="loader">
-        <div class="contener_general">
-            <div class="contener_mixte">
-                <div class="ballcolor ball_1">&nbsp;</div>
-            </div>
-            <div class="contener_mixte">
-                <div class="ballcolor ball_2">&nbsp;</div>
-            </div>
-            <div class="contener_mixte">
-                <div class="ballcolor ball_3">&nbsp;</div>
-            </div>
-            <div class="contener_mixte">
-                <div class="ballcolor ball_4">&nbsp;</div>
-            </div>
         </div>
     </div>
 </div>
 <style type="text/css">
 html body {
-    overflow: hidden;
-}
-
-.qrcode {
-    width: 85px;
-    height: 85px;
-    border-radius: 15px;
-    display: block;
-    margin: 0 auto;
-}
-
-#preview {
-    width: 100%;
-    height: 534px;
+    overflow: hidden !important;
 }
 
 #fullscreen {
@@ -57,6 +37,27 @@ html body {
     right: 30px;
     color: #fff;
 }
+
+#phoneInput {
+    position: relative;
+}
+
+#spin {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+}
+
+#welcome {
+    text-align: center;
+}
+pre {
+  margin: 20px 0;
+  padding: 20px;
+  background: #fafafa;
+}
+
+.round { border-radius: 50%; }
 </style>
 <script type="text/javascript">
 $(function() {
@@ -86,40 +87,6 @@ $(function() {
                 document.msExitFullscreen();
             }
         }
-    });
-    document.documentElement.addEventListener('touchstart', function(event) {
-        event.preventDefault();
-    });
-    document.documentElement.addEventListener('touchmove', function(event) {
-        event.preventDefault();
-    });
-
-    function initQRCode() {
-        let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-        scanner.addListener('scan', function(content) {
-            console.log(content);
-        });
-        Instascan.Camera.getCameras().then(function(cameras) {
-            if (cameras.length > 0) {
-                scanner.start(cameras[0]);
-            } else {
-                console.error('No cameras found.');
-            }
-        }).catch(function(e) {
-            console.error(e);
-        });
-    }
-    var qr = false;
-    $('#btnQRCode').click(function() {
-        if (qr) {
-            $('#preview').addClass('toshow').removeClass('animated flipInY');
-            $('#phoneInput').addClass('animated flipInY').removeClass('toshow');
-        } else {
-            initQRCode();
-            $('#phoneInput').addClass('toshow').removeClass('animated flipInY');
-            $('#preview').addClass('animated flipInY').removeClass('toshow');
-        }
-        qr = !qr;
     });
 });
 </script>

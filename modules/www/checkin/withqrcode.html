@@ -1,0 +1,134 @@
+<div id="particles" class="login page-login checkin">
+    <div class="color-overlay"></div>
+    <div class="container-login">
+        <div class="wrap-login">
+            <i id="fullscreen" class="zmdi zmdi-fullscreen zmdi-hc-4x"></i>
+            <section id="phoneInput" class="toshow">
+                <div class="wrap-input">
+                    <input id="txtPhone" class="input" type="text" readonly="readonly">
+                    <span class="focus-input" data-placeholder="&#xf2be;"></span>
+                </div>
+                <div class="simple-keyboard"></div>
+            </section>
+            <section id="process" class="">
+                <div class="sk-wave">
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                </div>
+            </section>
+            <video id="preview" class="toshow"></video>
+            <img id="btnQRCode" src="/images/qr-code-white.png" alt="QR-Code" class="qrcode">
+        </div>
+    </div>
+</div>
+<div class="loading lock toshow">
+    <div class="loader">
+        <div class="contener_general">
+            <div class="contener_mixte">
+                <div class="ballcolor ball_1">&nbsp;</div>
+            </div>
+            <div class="contener_mixte">
+                <div class="ballcolor ball_2">&nbsp;</div>
+            </div>
+            <div class="contener_mixte">
+                <div class="ballcolor ball_3">&nbsp;</div>
+            </div>
+            <div class="contener_mixte">
+                <div class="ballcolor ball_4">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+html body {
+    overflow: hidden;
+}
+
+.qrcode {
+    width: 85px;
+    height: 85px;
+    border-radius: 15px;
+    display: block;
+    margin: 0 auto;
+}
+
+#preview {
+    width: 100%;
+    height: 534px;
+}
+
+#fullscreen {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: #fff;
+}
+</style>
+<script type="text/javascript">
+$(function() {
+    document.addEventListener('webkitfullscreenchange', function() { //mozfullscreenchange msfullscreenchange fullscreenchange
+        $('#fullscreen').toggleClass('zmdi-fullscreen toshow');
+    });
+    $('#fullscreen').click(function() {
+        var elem = document.documentElement;
+        if ($('#fullscreen').hasClass('zmdi-fullscreen')) {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+        }
+    });
+    document.documentElement.addEventListener('touchstart', function(event) {
+        event.preventDefault();
+    });
+    document.documentElement.addEventListener('touchmove', function(event) {
+        event.preventDefault();
+    });
+
+    function initQRCode() {
+        let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+        scanner.addListener('scan', function(content) {
+            console.log(content);
+        });
+        Instascan.Camera.getCameras().then(function(cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]);
+            } else {
+                console.error('No cameras found.');
+            }
+        }).catch(function(e) {
+            console.error(e);
+        });
+    }
+    var qr = false;
+    $('#btnQRCode').click(function() {
+        if (qr) {
+            $('#preview').addClass('toshow').removeClass('animated flipInY');
+            $('#phoneInput').addClass('animated flipInY').removeClass('toshow');
+        } else {
+            initQRCode();
+            $('#phoneInput').addClass('toshow').removeClass('animated flipInY');
+            $('#preview').addClass('animated flipInY').removeClass('toshow');
+        }
+        qr = !qr;
+    });
+});
+</script>

@@ -134,6 +134,9 @@ $(function() {
 				var mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
 				number = vanillaTextMask.conformToMask(number, mask).conformedValue;
 				$('#txtPhone').val(number);
+				if (number && number.indexOf('_') < 0) {
+					checkin();
+				}
 			},
 			onKeyPress: function(e) {
 				if (e === '{enter}') {
@@ -147,31 +150,40 @@ $(function() {
 		});
 	}
 
-	function checkin() {
-		var phone = $('#txtPhone').val();
-		if (!phone || phone.indexOf('_') >= 0) {
-			$('#error').show();
+	function flipShow(selector, visible) {
+		if (visible) {
+			$(selector).addClass('animated flipInY').removeClass('toshow');
 		} else {
-			$('.loading').show();
-			$.ajax({
-				type: 'POST',
-				url: '/checkin',
-				data: JSON.stringify({
-					phone: phone
-				}),
-				contentType: "application/json",
-				dataType: 'json'
-			}).done(function(e) {
-				$('.loading').hide();
-				if (e.success) {
-					//
-				} else {
-					//
-				}
-			}).fail(function() {
-				$('.loading').hide();
-			});
+			$(selector).addClass('toshow').removeClass('animated flipInY');
 		}
+	}
+
+	function checkin() {
+		// flipShow('#phoneInput', false);
+		// flipShow('#process', true);
+		// $('#spin').show();
+		$('#spin').removeClass('toshow').addClass('animated fadeIn fast');
+		$('#keyboard').addClass('animated fadeOut fast');
+		var phone = $('#txtPhone').val();
+		$('.loading').show();
+		$.ajax({
+			type: 'POST',
+			url: '/checkin',
+			data: JSON.stringify({
+				phone: phone
+			}),
+			contentType: "application/json",
+			dataType: 'json'
+		}).done(function(e) {
+			$('.loading').hide();
+			if (e.success) {
+				$('#message').html(e.message);
+			} else {
+				//
+			}
+		}).fail(function() {
+			$('.loading').hide();
+		});
 	}
 
 	$("#loginForm").submit(function(e) {
