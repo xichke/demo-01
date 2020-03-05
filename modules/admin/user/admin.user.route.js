@@ -16,7 +16,7 @@ module.exports = function(app) {
 			user: '{}'
 		});
 	});
-	app.get('/admin/user/edit/:id', async (req, res) => {
+	app.get('/admin/user/:id', async (req, res) => {
 		try {
 			let user = await app.models.User.findOne({
 				_id: req.params.id

@@ -8,9 +8,9 @@ let _schema = new Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'NUser'
 	},
-	salonId: {
+	clientId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'Salon'
+		ref: 'Client'
 	},
 	checkedIn: {
 		type: Date,

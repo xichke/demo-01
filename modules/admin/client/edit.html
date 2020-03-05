@@ -1,4 +1,12 @@
 <section id="app" class="clients-edit">
+    <div class="users-list-filter px-1">
+        <div class="row py-2 mb-2">
+            <div class="col-12 col-sm-6 col-lg-11"></div>
+            <div class="col-12 col-sm-6 col-lg-1 d-flex">
+                <button v-if="id" v-on:click="remove" type="button" class="btn btn-danger btn-block glow users-list-clear mb-0">Delete</button>
+            </div>
+        </div>
+    </div>
     <div class="card">
         <div class="card-content">
             <div class="card-body">
@@ -9,6 +17,12 @@
                                 <div class="controls">
                                     <label>Name</label>
                                     <input v-model="client.name" type="text" class="form-control" placeholder="First Name">
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <div class="controls">
+                                    <label>Operator</label>
+                                    <input v-model="client.operator" type="email" class="form-control" placeholder="Email">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -31,6 +45,30 @@
                                     <input v-model="client.address" type="text" class="form-control" placeholder="Address">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Google placeId</label>
+                                    <input v-model="client.placeId" type="text" class="form-control" placeholder="Google placeId">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Facebook</label>
+                                    <input v-model="client.fb" type="text" class="form-control" placeholder="Facebook">
+                                </div>
+                                <div class="controls">
+                                    <label>Google+</label>
+                                    <input v-model="client.googlePlus" type="text" class="form-control" placeholder="Google+">
+                                </div>
+                                <div class="controls">
+                                    <label>Linkedin</label>
+                                    <input v-model="client.linkedin" type="text" class="form-control" placeholder="Linkedin">
+                                </div>
+                                <div class="controls">
+                                    <label>Instagram</label>
+                                    <input v-model="client.instagram" type="text" class="form-control" placeholder="Instagram">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -45,7 +83,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
-                            <a href="/admin/client" class="btn btn-light">Cancel</a> &nbsp; <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-">Save changes</button> &nbsp; <button v-if="id" v-on:click="remove" type="button" class="btn btn-danger glow mb-1 mb-sm-0 mr-0 mr-sm-">Delete</button>
+                            <a href="/admin/client" class="btn btn-secondary glow mb-1 mb-sm-0 mr-0 mr-sm-">Cancel</a> &nbsp; <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-">Save changes</button>
                         </div>
                     </div>
                 </form>
@@ -58,7 +96,7 @@ $(function() {
     new Vue({
         el: "#app",
         data: {
-            client: {{{ client }}},
+            client: JSON.parse('{{{ client }}}'),
             id: '{{ id }}'
         },
         methods: {

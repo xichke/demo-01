@@ -2,7 +2,7 @@
 
 module.exports = function(app) {
 	app.get('/admin/client', async (req, res) => {
-		let clients = await app.models.Client.find({}, '-password -__v').lean();
+		let clients = await app.models.Client.find({}, '-password -__v').populate('operator').lean();
 		res.render('admin/client', {
 			layout: 'admin',
 			title: 'Client Management',
@@ -16,7 +16,7 @@ module.exports = function(app) {
 			client: '{}'
 		});
 	});
-	app.get('/admin/client/edit/:id', async (req, res) => {
+	app.get('/admin/client/:id', async (req, res) => {
 		try {
 			let client = await app.models.Client.findOne({
 				_id: req.params.id

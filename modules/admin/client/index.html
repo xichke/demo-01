@@ -16,8 +16,8 @@
                             <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th>username</th>
                                     <th>name</th>
+                                    <th>operaetor</th>
                                     <th>last activity</th>
                                     <th>role</th>
                                     <th>status</th>
@@ -26,13 +26,13 @@
                             </thead>
                             <tbody> {{#each clients}} <tr>
                                     <td>{{_id}}</td>
-                                    <td>{{username}}</td>
-                                    <td>{{firstName}} {{lastName}}</td>
+                                    <td>{{name}}</td>
+                                    <td><a href="/admin/user/{{operator._id}}">{{operator.username}}</a></td>
                                     <td>30/04/2019</td>
                                     <td>No</td>
                                     <td>Staff</td>
                                     <td> {{#if isActive}} <span class="badge badge-light-success">active</span> {{else}} <span class="badge badge-light-danger">dsiabled</span> {{/if}} </td>
-                                    <td><a href="/admin/client/edit/{{_id}}"><i class="bx bx-edit-alt"></i></a></td>
+                                    <td><a href="/admin/client/{{_id}}"><i class="bx bx-edit-alt"></i></a></td>
                                 </tr> {{/each}} </tbody>
                         </table>
                     </div>

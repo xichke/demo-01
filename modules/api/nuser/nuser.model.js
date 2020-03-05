@@ -24,7 +24,6 @@ let _schema = new Schema({
 	dob: {
 		type: Date
 	},
-	lastVisit: Date,
 	updated: {
 		type: Date
 	},

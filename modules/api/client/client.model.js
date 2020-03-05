@@ -21,11 +21,50 @@ let _schema = new Schema({
     type: String,
     trim: true
   },
-  salons: [{
+  placeId: {
+    type: String,
+    trim: true
+  },
+  fb: {
+    type: String,
+    trim: true
+  },
+  youtube: {
+    type: String,
+    trim: true
+  },
+  googlePlus: {
+    type: String,
+    trim: true
+  },
+  linkedin: {
+    type: String,
+    trim: true
+  },
+  instagram: {
+    type: String,
+    trim: true
+  },
+  website: {
+    type: String,
+    trim: true
+  },
+  location: {
+    type: {
+      type: String,
+      enum: ['Point'],
+      required: true,
+      default: 'Point'
+    },
+    coordinates: {
+      type: [Number]
+    }
+  },
+  operator: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Salon'
-  }],
-  admin: {
+    ref: 'User'
+  },
+  owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },

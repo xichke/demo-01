@@ -9,7 +9,6 @@ module.exports = (app) => {
 	});
 	app.post('/login', (req, res, next) => {
 		app.get('passport').authenticate('mongo', (err, user) => {
-			console.log('======>>> ', err);
 			if (!err) {
 				res.send({
 					success: true,

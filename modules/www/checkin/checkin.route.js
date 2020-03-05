@@ -14,8 +14,8 @@ module.exports = function(app) {
 			let phone = libphone
 				.parsePhoneNumberFromString(req.body.phone, 'US')
 				.format('E.164');
-			let salon = await app.models.Salon.findOne({
-					admin: req.user._id
+			let client = await app.models.Client.findOne({
+					operator: req.user._id
 				}).lean(),
 				nuser = await app.models.NUser.findOne({
 					phone: phone
@@ -28,11 +28,11 @@ module.exports = function(app) {
 			console.log(nuser);
 			let transaction = await app.models.Transaction({
 				nUserId: nuser._id,
-				salonId: salon._id
+				clientId: client._id
 			}).save();
 			res.json({
 				success: true,
-				message: `Welcome ${nuser.name ? nuser.name : ''} to ${salon.name}. <br/> You checked in successfully.`,
+				message: `Welcome ${nuser.name ? nuser.name : ''} to ${client.name}. <br/> You checked in successfully.`,
 				point: ''
 			});
 		} catch (err) {
