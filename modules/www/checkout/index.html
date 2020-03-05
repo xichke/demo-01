@@ -45,9 +45,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-12 text-md-right">
-                                <button class="btn btn-sm btn-primary glow mt-md-2 mb-1">View Report</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -56,6 +53,7 @@
                     <table id="table-marketing-campaigns" class="table table-borderless table-marketing-campaigns mb-0">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Phone Number</th>
                                 <th>Checked in</th>
                                 <th>Charges</th>
@@ -66,7 +64,8 @@
                         <tbody>
                             {{#each transactions}}
                             <tr>
-                                <td class="py-1 line-ellipsis">{{client.phone}}</td>
+                                <td class="py-1">{{order}}</td>
+                                <td class="py-1">{{client.phone}}</td>
                                 <td class="py-1">
                                     <span class="moment-relative" data-date="{{checkedIn}}"></span>
                                 </td>
@@ -83,96 +82,58 @@
                                 </td>
                             </tr>
                             {{/each}}
-                            <tr>
-                                <td class="py-1 line-ellipsis">
-                                    <img class="rounded-circle mr-1" src="/images/icon/puma.png" alt="card" height="24" width="24">Puma Shoes </td>
-                                <td class="py-1">
-                                    <i class="bx bx-trending-down text-danger align-middle mr-50"></i><span>15.5%</span>
-                                </td>
-                                <td class="py-1">$1,569</td>
-                                <td class="text-success py-1">Active</td>
-                                <td class="text-center py-1">
-                                    <div class="dropdown">
-                                        <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-1 line-ellipsis">
-                                    <img class="rounded-circle mr-1" src="/images/icon/nike.png" alt="card" height="24" width="24">Nike Air Jordan </td>
-                                <td class="py-1">
-                                    <i class="bx bx-trending-up text-success align-middle mr-50"></i><span>70.30%</span>
-                                </td>
-                                <td class="py-1">$23,859</td>
-                                <td class="text-danger py-1">Closed</td>
-                                <td class="text-center py-1">
-                                    <div class="dropdown">
-                                        <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-1 line-ellipsis">
-                                    <img class="rounded-circle mr-1" src="/images/icon/one-plus.png" alt="card" height="24" width="24">Oneplus 7 pro </td>
-                                <td class="py-1">
-                                    <i class="bx bx-trending-up text-success align-middle mr-50"></i><span>10.4%</span>
-                                </td>
-                                <td class="py-1">$9,523</td>
-                                <td class="text-success py-1">Active</td>
-                                <td class="text-center py-1">
-                                    <div class="dropdown">
-                                        <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-1 line-ellipsis">
-                                    <img class="rounded-circle mr-1" src="/images/icon/google.png" alt="card" height="24" width="24">Google Pixel 4 xl </td>
-                                <td class="py-1"><i class="bx bx-trending-down text-danger align-middle mr-50"></i><span>-62.38%</span>
-                                </td>
-                                <td class="py-1">12,897</td>
-                                <td class="text-danger py-1">Closed</td>
-                                <td class="text-center py-1">
-                                    <div class="dropup">
-                                        <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
-                                        </span>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
-                                            <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
-                    <!-- table ends -->
                 </div>
             </div>
         </div>
     </div>
 </section>
+<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#inlineForm">
+    Launch Modal
+</button>
+<!--login form Modal -->
+<div class="modal fade text-left" id="inlineForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel33">Login Form </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="bx bx-x"></i>
+                </button>
+            </div>
+            <form action="#">
+                <div class="modal-body">
+                    <label>Email: </label>
+                    <div class="form-group">
+                        <input type="text" placeholder="Email Address" class="form-control">
+                    </div>
+                    <label>Password: </label>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>
+                    <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">login</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <link rel="stylesheet" type="text/css" href="/css/pages/dashboard-ecommerce.min.css">
 <script src="/js/scripts/pages/dashboard-ecommerce.min.js"></script>
+<script src="/js/scripts/modal/components-modal.min.js"></script>
 <script type="text/javascript">
 $(function() {
-    $('.moment-relative').each(function(i, obj){
+    $('.moment-relative').each(function(i, obj) {
         console.log($(this).attr('data-date'));
-
         $(this).html(moment($(this).attr('data-date')).fromNow());
     });
 });
