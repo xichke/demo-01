@@ -1,12 +1,36 @@
 'use strict';
-const mongoose = require('mongoose');
+const utils = require('../../shared/utils');
 
-module.exports = function(app) {
-	app.get('/checkout', (req, res) => {
+module.exports = (app) => {
+	app.get('/checkout', async (req, res) => {
 		// if (!req.isAuthenticated())
 		//     return res.redirect(`/login?ref=${req.originalUrl}`);
-		res.render('checkout', {
-			layout: false
-		});
+		try {
+			let operator = await app.models.Operator.findOne({
+				manager: req.user._id
+			}).lean();
+			console.log('=====>>> operator ', operator);
+
+			let transactions = await app.models.Transaction.find({
+				operator: operator._id
+			}).populate('client').lean();
+			console.log('=====>>> transactions ', transactions);
+
+			transactions.forEach(e => {
+				e.client.phone = utils.maskPhoneNumber(e.client.phone);
+			});
+			console.log('=====>>> transactions ', transactions);
+
+			res.render('checkout', {
+				layout: 'admin',
+				transactions: transactions
+			});
+		} catch (err) {
+			throw err;
+			res.render('checkout', {
+				layout: 'admin',
+				error: err
+			});
+		}
 	});
 };

@@ -72,7 +72,7 @@ var UserSchema = new mongoose.Schema({
 	}
 });
 
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async (next) => {
 	try {
 		if (this.isModified('password')) {
 			this.password = await bcrypt.hash(this.password, config.saltRounds);

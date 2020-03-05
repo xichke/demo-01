@@ -6,7 +6,7 @@ module.exports = function(app) {
         if (!req.isAuthenticated())
             return res.redirect(`/login?ref=${req.originalUrl}`);
         res.render('backoffice', {
-            layout: 'backoffice'
+            layout: 'admin'
         });
     });
 };

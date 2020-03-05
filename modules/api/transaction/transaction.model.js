@@ -1,17 +1,25 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+	Schema = mongoose.Schema,
+	moment = require('moment');
 
 let _schema = new Schema({
-	operatorId: {
+	operator: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Operator'
 	},
-	clientId: {
+	client: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Client'
 	},
+	order: Number,
+	note: {
+		type: String,
+		trim: true
+	},
+	pay: Number,
+	point: Number,
 	checkedIn: {
 		type: Date,
 		default: Date.now
@@ -22,20 +30,26 @@ let _schema = new Schema({
 	amout: Number
 });
 
-mongoose.model('Transaction', _schema);
+_schema.pre('save', async (next) => {
+	try {
+		let today = moment().startOf('day'),
+			count = await this.constructor.count({
+				operator: this.operator,
+				client: this.client,
+				checkedIn: {
+					$gte: today.toDate(),
+					$lte: moment(today).endOf('day').toDate()
+				}
+			}).lean();
+		console.log('### ', today.toDate(), moment(today).endOf('day').toDate());
 
-_schema.pre('save', function(next) {
-	var doc = this;
-	counter.findByIdAndUpdate({
-		_id: 'entityId'
-	}, {
-		$inc: {
-			seq: 1
-		}
-	}, function(error, counter) {
-		if (error)
-			return next(error);
-		doc.testvalue = counter.seq;
+		this.order = count++;
+
 		next();
-	});
+	} catch (err) {
+		throw err;
+		next();
+	}
 });
+
+mongoose.model('Transaction', _schema);

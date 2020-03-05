@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 let _schema = new Schema({
-  operatorId: {
+  operator: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Operator'
   },
@@ -37,7 +37,7 @@ let _schema = new Schema({
 });
 
 _schema.index({
-  operatorId: 1,
+  operator: 1,
   phone: 1
 }, {
   unique: true

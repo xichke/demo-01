@@ -18,19 +18,19 @@ module.exports = function(app) {
 					manager: req.user._id
 				}).lean(),
 				client = await app.models.Client.findOne({
-					operatorId: operator._id,
+					operator: operator._id,
 					phone: phone
 				}).lean();
 			if (!client) {
 				client = await new app.models.Client({
-					operatorId: operator._id,
+					operator: operator._id,
 					phone: phone
 				}).save();
 			}
 			console.log(client);
 			let transaction = await app.models.Transaction({
-				operatorId: operator._id,
-				clientId: client._id
+				operator: operator._id,
+				client: client._id
 			}).save();
 			res.json({
 				success: true,
@@ -38,6 +38,7 @@ module.exports = function(app) {
 				point: ''
 			});
 		} catch (err) {
+			throw err;
 			res.status(500).send({
 				success: false
 			});
