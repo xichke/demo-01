@@ -7,9 +7,9 @@ module.exports = function(app) {
 				layout: 'admin',
 				count: {
 					user: await app.models.User.countDocuments({}).lean(),
+					operator: await app.models.Operator.countDocuments({}).lean(),
 					client: await app.models.Client.countDocuments({}).lean(),
-					transaction: await app.models.Transaction.countDocuments({}).lean(),
-					nuser: await app.models.NUser.countDocuments({}).lean()
+					transaction: await app.models.Transaction.countDocuments({}).lean()
 				}
 			});
 		} catch (err) {

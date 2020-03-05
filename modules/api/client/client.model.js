@@ -4,71 +4,29 @@ const mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 let _schema = new Schema({
+  operatorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Operator'
+  },
+  phone: {
+    type: String,
+    trim: true
+  },
   name: {
     type: String,
-    unique: 'name has already existed',
     trim: true
   },
   address: {
     type: String,
     trim: true
   },
+  dob: {
+    type: Date
+  },
   email: {
     type: String,
     trim: true
   },
-  phone: {
-    type: String,
-    trim: true
-  },
-  placeId: {
-    type: String,
-    trim: true
-  },
-  fb: {
-    type: String,
-    trim: true
-  },
-  youtube: {
-    type: String,
-    trim: true
-  },
-  googlePlus: {
-    type: String,
-    trim: true
-  },
-  linkedin: {
-    type: String,
-    trim: true
-  },
-  instagram: {
-    type: String,
-    trim: true
-  },
-  website: {
-    type: String,
-    trim: true
-  },
-  location: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      required: true,
-      default: 'Point'
-    },
-    coordinates: {
-      type: [Number]
-    }
-  },
-  operator: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  isActive: Boolean,
   updated: {
     type: Date
   },
@@ -76,6 +34,13 @@ let _schema = new Schema({
     type: Date,
     default: Date.now
   }
+});
+
+_schema.index({
+  operatorId: 1,
+  phone: 1
+}, {
+  unique: true
 });
 
 mongoose.model('Client', _schema);

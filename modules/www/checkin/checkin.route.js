@@ -14,25 +14,27 @@ module.exports = function(app) {
 			let phone = libphone
 				.parsePhoneNumberFromString(req.body.phone, 'US')
 				.format('E.164');
-			let client = await app.models.Client.findOne({
-					operator: req.user._id
+			let operator = await app.models.Operator.findOne({
+					manager: req.user._id
 				}).lean(),
-				nuser = await app.models.NUser.findOne({
+				client = await app.models.Client.findOne({
+					operatorId: operator._id,
 					phone: phone
-				}, '_id phone name').lean();
-			if (!nuser) {
-				nuser = await new app.models.NUser({
+				}).lean();
+			if (!client) {
+				client = await new app.models.Client({
+					operatorId: operator._id,
 					phone: phone
 				}).save();
 			}
-			console.log(nuser);
+			console.log(client);
 			let transaction = await app.models.Transaction({
-				nUserId: nuser._id,
+				operatorId: operator._id,
 				clientId: client._id
 			}).save();
 			res.json({
 				success: true,
-				message: `Welcome ${nuser.name ? nuser.name : ''} to ${client.name}. <br/> You checked in successfully.`,
+				message: `Welcome ${client.name ? client.name : ''} to ${operator.name}. <br/> You checked in successfully.`,
 				point: ''
 			});
 		} catch (err) {

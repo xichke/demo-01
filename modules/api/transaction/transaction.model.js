@@ -4,9 +4,9 @@ const mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 let _schema = new Schema({
-	nUserId: {
+	operatorId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'NUser'
+		ref: 'Operator'
 	},
 	clientId: {
 		type: mongoose.Schema.Types.ObjectId,

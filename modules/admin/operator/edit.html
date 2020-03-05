@@ -1,0 +1,146 @@
+<section id="app" class="operators-edit">
+    <div class="users-list-filter px-1">
+        <div class="row py-2 mb-2">
+            <div class="col-12 col-sm-6 col-lg-11"></div>
+            <div class="col-12 col-sm-6 col-lg-1 d-flex">
+                <button v-if="id" v-on:click="remove" type="button" class="btn btn-danger btn-block glow users-list-clear mb-0">Delete</button>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-body">
+                <form novalidate v-on:submit="submit" action="#" autocomplete="off">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Name</label>
+                                    <input v-model="operator.name" type="text" class="form-control" placeholder="First Name">
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <div class="controls">
+                                    <label>manager</label>
+                                    <input v-model="operator.manager" type="email" class="form-control" placeholder="Manager">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>E-mail</label>
+                                    <input v-model="operator.email" type="email" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Phone number</label>
+                                    <input v-model="operator.phone" type="text" class="form-control" placeholder="Phone number">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Address</label>
+                                    <input v-model="operator.address" type="text" class="form-control" placeholder="Address">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Google placeId</label>
+                                    <input v-model="operator.placeId" type="text" class="form-control" placeholder="Google placeId">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="controls">
+                                    <label>Facebook</label>
+                                    <input v-model="operator.fb" type="text" class="form-control" placeholder="Facebook">
+                                </div>
+                                <div class="controls">
+                                    <label>Google+</label>
+                                    <input v-model="operator.googlePlus" type="text" class="form-control" placeholder="Google+">
+                                </div>
+                                <div class="controls">
+                                    <label>Linkedin</label>
+                                    <input v-model="operator.linkedin" type="text" class="form-control" placeholder="Linkedin">
+                                </div>
+                                <div class="controls">
+                                    <label>Instagram</label>
+                                    <input v-model="operator.instagram" type="text" class="form-control" placeholder="Instagram">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <fieldset>
+                                <div class="checkbox checkbox-secondary checkbox-glow">
+                                    <input v-model="operator.isActive" type="checkbox" id="isActive">
+                                    <label for="isActive">isActive</label>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex flex-sm-row flex-column justify-content-end mt-1">
+                            <a href="/admin/operator" class="btn btn-secondary glow mb-1 mb-sm-0 mr-0 mr-sm-">Cancel</a> &nbsp; <button type="submit" class="btn btn-primary glow mb-1 mb-sm-0 mr-0 mr-sm-">Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+$(function() {
+    new Vue({
+        el: "#app",
+        data: {
+            operator: JSON.parse('{{{ operator }}}'),
+            id: '{{ id }}'
+        },
+        methods: {
+            submit: function(e) {
+                event.preventDefault();
+                if (this.id) {
+                    delete this.operator._id;
+                    $.ajax({
+                        type: 'PUT',
+                        url: '/api/operator/' + this.id,
+                        data: JSON.stringify(this.operator),
+                        contentType: 'application/json'
+                    }).done(function(e) {
+                        window.location = '/admin/operator';
+                    }).fail(function() {
+                        //
+                    });
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/operator',
+                        data: JSON.stringify(this.operator),
+                        contentType: 'application/json'
+                    }).done(function(e) {
+                        window.location = '/admin/operator';
+                    }).fail(function() {
+                        //
+                    });
+                }
+            },
+            remove: function() {
+                event.preventDefault();
+                if (confirm('Are you sure to delete?')) {
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/api/operator/' + this.id
+                    }).done(function(e) {
+                        window.location = '/admin/operator';
+                    }).fail(function() {
+                        //
+                    });
+                }
+            }
+        }
+    });
+});
+</script>

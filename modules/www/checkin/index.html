@@ -51,19 +51,25 @@ html body {
 #welcome {
     text-align: center;
 }
+
 pre {
-  margin: 20px 0;
-  padding: 20px;
-  background: #fafafa;
+    margin: 20px 0;
+    padding: 20px;
+    background: #fafafa;
 }
 
-.round { border-radius: 50%; }
+.round {
+    border-radius: 50%;
+}
 </style>
 <script type="text/javascript">
 $(function() {
-    document.addEventListener('webkitfullscreenchange', function() { //mozfullscreenchange msfullscreenchange fullscreenchange
-        $('#fullscreen').toggleClass('zmdi-fullscreen toshow');
+    ['webkitfullscreenchange', 'mozfullscreenchange', 'msfullscreenchange', 'fullscreenchange'].forEach(function(e) {
+        document.addEventListener(e, function() {
+            $('#fullscreen').toggleClass('zmdi-fullscreen toshow');
+        });
     });
+
     $('#fullscreen').click(function() {
         var elem = document.documentElement;
         if ($('#fullscreen').hasClass('zmdi-fullscreen')) {
