@@ -1,6 +1,7 @@
 'use strict';
 const _ = require('lodash'),
-	glob = require('glob');
+	glob = require('glob'),
+	moment = require('moment');
 
 function match(patterns, excludes) {
 	var urlRegex = new RegExp('^(?:[a-z]+:)?\/\/', 'i');
@@ -42,5 +43,14 @@ let maskPhoneNumber = (e) => {
 
 module.exports = {
 	match: match,
-	maskPhoneNumber: maskPhoneNumber
+	maskPhoneNumber: maskPhoneNumber,
+	date: {
+		today: () => {
+			let now = moment();
+			return {
+				start: now.startOf('day').toString(),
+				end: now.endOf('day').toString()
+			};
+		}
+	}
 };

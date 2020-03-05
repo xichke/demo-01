@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
-	moment = require('moment');
+	utils = require('../../shared/utils');
 
 let _schema = new Schema({
 	operator: {
@@ -30,26 +30,37 @@ let _schema = new Schema({
 	amout: Number
 });
 
-_schema.pre('save', async (next) => {
+_schema.pre('save', async function(next) {
 	try {
-		let today = moment().startOf('day'),
-			count = await this.constructor.count({
+		let {
+			start,
+			end
+		} = utils.date.today(),
+			count = await mongoose.models.Transaction.count({
 				operator: this.operator,
-				client: this.client,
 				checkedIn: {
-					$gte: today.toDate(),
-					$lte: moment(today).endOf('day').toDate()
+					$gte: start,
+					$lte: end
 				}
 			}).lean();
-		console.log('### ', today.toDate(), moment(today).endOf('day').toDate());
-
-		this.order = count++;
-
-		next();
+		this.order = count + 1;
 	} catch (err) {
 		throw err;
 		next();
 	}
 });
+
+_schema.query.today = function() {
+	let {
+		start,
+		end
+	} = utils.date.today();
+	return this.find({
+		checkedIn: {
+			$gte: start,
+			$lte: end
+		}
+	});
+};
 
 mongoose.model('Transaction', _schema);

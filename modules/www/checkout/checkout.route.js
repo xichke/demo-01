@@ -13,8 +13,7 @@ module.exports = (app) => {
 
 			let transactions = await app.models.Transaction.find({
 				operator: operator._id
-			}).populate('client').lean();
-			console.log('=====>>> transactions ', transactions);
+			}).today().populate('client').lean();
 
 			transactions.forEach(e => {
 				e.client.phone = utils.maskPhoneNumber(e.client.phone);

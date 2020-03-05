@@ -21,14 +21,14 @@ module.exports = function(app) {
 					operator: operator._id,
 					phone: phone
 				}).lean();
+			console.log('------<<< client ', client);
 			if (!client) {
 				client = await new app.models.Client({
 					operator: operator._id,
 					phone: phone
 				}).save();
 			}
-			console.log(client);
-			let transaction = await app.models.Transaction({
+			let transaction = await new app.models.Transaction({
 				operator: operator._id,
 				client: client._id
 			}).save();
