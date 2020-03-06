@@ -32,6 +32,7 @@ module.exports = function(app) {
 				operator: operator._id,
 				client: client._id
 			}).save();
+			app.io.emit('checkin', transaction);
 			res.json({
 				success: true,
 				message: `Welcome ${client.name ? client.name : ''} to ${operator.name}. <br/> You checked in successfully.`,

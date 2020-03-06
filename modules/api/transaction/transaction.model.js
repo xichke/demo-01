@@ -27,7 +27,13 @@ let _schema = new Schema({
 	checkedOut: {
 		type: Date
 	},
-	amout: Number
+	status: {
+		type: [{
+			type: String,
+			enum: ['waiting', 'in progress', 'done']
+		}],
+		default: ['waiting']
+	}
 });
 
 _schema.pre('save', async function(next) {

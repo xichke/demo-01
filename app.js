@@ -25,5 +25,6 @@ const config = require('config'),
 });
 
 const server = http.createServer(app);
+require('./modules/socket')(server, app);
 server.listen(config.port);
 console.log(`App is running on port : ${config.port}`);
