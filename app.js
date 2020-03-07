@@ -7,22 +7,26 @@ const config = require('config'),
 	app = express(),
 	utils = require('./modules/shared/utils');
 
+app.set('utils', utils);
 [
+	'./modules/app/init',
 	'./modules/shared/db',
-	'./modules/auth/passport',
-	'./modules/shared/app.init',
 	'./modules/auth/seed',
+	'./modules/auth/passport',
 	'./modules/**/*middleware.js',
 	'./modules/**/*route.js',
-	'./modules/shared/404',
-	'./modules/shared/error-handler'
+	'./modules/**/*pos.js'
 ].forEach(e => {
+	let bootstrap = (e) => {
+		console.log(`[loading...] ${e}`);
+		require(e)(app);
+	};
 	if (e.includes('*')) {
 		utils.match(e).forEach((x) => {
-			require(path.resolve(x))(app);
+			bootstrap(path.resolve(x));
 		});
 	} else {
-		require(e)(app);
+		bootstrap(e);
 	}
 });
 

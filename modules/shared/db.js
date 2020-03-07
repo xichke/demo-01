@@ -1,9 +1,9 @@
 const mongoose = require('mongoose'),
 	path = require('path'),
+	utils = require('./utils'),
 	config = require('config');
 
 module.exports = function(app) {
-	utils = require('./utils');
 	utils.match('modules/**/*.model.js').forEach(function(e) {
 		require(path.resolve(e));
 	});

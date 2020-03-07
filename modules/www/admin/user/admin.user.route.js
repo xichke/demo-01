@@ -2,7 +2,9 @@
 
 module.exports = function(app) {
 	app.get('/admin/user', async (req, res) => {
-		let users = await app.models.User.find({}, '-password -__v').lean();
+		let users = await app.models.User.find({
+			isAdmin: false
+		}, '-password -__v').lean();
 		res.render('admin/user', {
 			title: 'User Management',
 			layout: 'admin',

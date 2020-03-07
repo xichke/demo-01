@@ -16,6 +16,7 @@ module.exports = (app) => {
 		_id: id,
 		isActive: true
 	}, done));
+
 	passport.use('mongo',
 		new LocalStrategy({
 			usernameField: 'username',

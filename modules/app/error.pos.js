@@ -1,6 +1,6 @@
 'use strict';
 
-const logger = require('./logger');
+const logger = require('../shared/logger');
 
 module.exports = function(app) {
     app.use(function(err, req, res, next) {

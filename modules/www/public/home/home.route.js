@@ -4,7 +4,6 @@ const mongoose = require('mongoose'),
 
 module.exports = function(app) {
 	app.get('/', (req, res, next) => {
-		console.log(req.isAuthenticated(), req.user);
 		res.send('hi');
 	});
 };

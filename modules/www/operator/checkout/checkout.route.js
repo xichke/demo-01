@@ -1,5 +1,4 @@
 'use strict';
-const utils = require('../../shared/utils');
 
 module.exports = (app) => {
 	app.get('/checkout', async (req, res) => {
@@ -9,7 +8,7 @@ module.exports = (app) => {
 			}).today().populate('client').lean();
 
 			transactions.forEach(e => {
-				e.client.phone = utils.maskPhoneNumber(e.client.phone);
+				e.client.phone = app.utils.maskPhoneNumber(e.client.phone);
 			});
 			console.log('=====>>> transactions ', transactions);
 

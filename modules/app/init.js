@@ -11,7 +11,7 @@ const config = require('config'),
 	exphbs = require('express-handlebars'),
 	helpers = require('handlebars-helpers')(),
 	bodyParser = require('body-parser'),
-	utils = require('./utils'),
+	utils = require('../shared/utils'),
 	views = utils.match('modules/**/*.html').map(e => `../${e}`);
 module.exports = function(app) {
 	app.set('trust proxy', 1);

@@ -202,7 +202,7 @@ $(function() {
 				dataType: 'json'
 			}).done(function(e) {
 				if (e.success) {
-					window.location.assign(e.redirect);
+					window.location.assign($('#ref').val());
 				} else {
 					$('#loginError').show();
 				}

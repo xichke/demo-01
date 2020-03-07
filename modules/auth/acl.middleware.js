@@ -3,13 +3,14 @@
 const config = require('config');
 
 module.exports = (app) => {
-	let forbidden = res => {
-		res.status(403).send('Forbidden');
+	let forbidden = (req, res) => {
+		// res.status(403).send('Forbidden');
+		res.redirect(`/login?ref=${req.originalUrl}`);
 	}
 	//admin
 	app.use(['/api*', '/admin*'], (req, res, next) => {
 		if (!req.user || !req.user.isAdmin) {
-			return forbidden(res);
+			return forbidden(req, res);
 		}
 		next();
 	});
@@ -18,7 +19,7 @@ module.exports = (app) => {
 	app.use(['/checkout', '/checkin'], async (req, res, next) => {
 		try {
 			if (!req.user) {
-				return forbidden(res);
+				return forbidden(req, res);
 			}
 			req.operator = await app.models.Operator.findOne({
 				manager: req.user._id,
@@ -27,7 +28,7 @@ module.exports = (app) => {
 			if (req.operator) {
 				next();
 			} else {
-				return forbidden(res);
+				return forbidden(req, res);
 			}
 		} catch (err) {
 			next(err);
