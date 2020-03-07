@@ -1,0 +1,242 @@
+<section id="checkout">
+    <div class="row">
+        <div class="col-xl-12 col-12 dashboard-marketing-campaign">
+            <div class="card marketing-campaigns">
+                <div class="card-header d-flex justify-content-between align-items-center pb-1">
+                    <h4 class="card-title">Check Out</h4>
+                    <a href="/checkout"><i class="zmdi zmdi-refresh font-medium-3 cursor-pointer"></i></a>
+                </div>
+                <div class="table-responsive">
+                    <table id="table-marketing-campaigns" class="table table-borderless table-marketing-campaigns mb-0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Client</th>
+                                <th>Checked in</th>
+                                <th>InProgress</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="transaction in transactions" :key="transaction._id">
+                                <td class="py-1">
+                                    <a href="#" v-on:click="checkout(transaction)">${transaction.order}</a>
+                                </td>
+                                <td class="py-1">
+                                    <a href="#" v-on:click="checkout(transaction)"><i class="bx bx-phone"></i> ${transaction.client.phone}</a>
+                                </td>
+                                <td class="py-1">
+                                    <span class="text-danger" v-if="!transaction.inProgress">${transaction.checkedIn | fromNow}</span>
+                                </td>
+                                <td class="py-1">
+                                    <span class="text-success" v-if="transaction.inProgress">${transaction.inProgress | fromNow}</span>
+                                    <fieldset v-else>
+                                        <div class="checkbox checkbox-success checkbox-glow">
+                                            <input v-on:click="inProgress(transaction)" type="checkbox" id="inProgress">
+                                            <label for="inProgress">inProgress</label>
+                                        </div>
+                                    </fieldset>
+                                </td>
+                                <td class="text-success py-1">
+                                    <span class="badge badge-light-danger" v-if="!transaction.inProgress">Waiting</span>
+                                    <span class="badge badge-light-success" v-else-if="!transaction.checkedOut">In Progress</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="operator" value="{{operator}}">
+    <div class="modal fade text-left w-100" id="checkoutModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel20" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-full" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel20">Check Out</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="bx bx-x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="card">
+                                <div class="card-header mx-auto pt-3">
+                                    <div class="avatar bg-rgba-primary p-50 square90">
+                                        <img class="img-fluid" width="80" height="80" v-bind:src="checkoutItem.client.avatar">
+                                    </div>
+                                </div>
+                                <div class="card-content">
+                                    <div class="card-body text-center">
+                                        <h4 class="text-info" v-if="checkoutItem.client.name"><i class="bx bx-user"></i> ${checkoutItem.client.name}</h4>
+                                        <h4 class="text-primary"><i class="bx bx-phone"></i> ${checkoutItem.client.phone}</h4>
+                                        <div class="d-flex justify-content-around mb-1">
+                                            <div class="card-icons d-flex flex-column col-4">
+                                                <i class='bx bx-user-check font-medium-5 font-weight-bold text-warning'></i> Visit
+                                                <p class="text-info">12</p>
+                                            </div>
+                                            <div class="card-icons d-flex flex-column col-4">
+                                                <i class='bx bx-dollar font-medium-5 font-weight-bold text-success'></i> Spend
+                                                <p class="text-info">$2945</p>
+                                            </div>
+                                            <div class="card-icons d-flex flex-column col-4">
+                                                <i class='bx bx-heart font-medium-5 font-weight-bold text-danger'></i> Point
+                                                <p class="text-info">2500</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-around mb-1">
+                                            <div class="card-icons d-flex flex-column col-4">
+                                                <i class='bx bx-star font-medium-5 font-weight-bold text-warning'></i> Review
+                                                <p class="text-info">N/I</p>
+                                            </div>
+                                            <div class="card-icons d-flex flex-column col-4">
+                                                <i class='bx bx-heart font-medium-5 font-weight-bold text-danger'></i> Point
+                                                <p class="text-info">234</p>
+                                            </div>
+                                            <div class="card-icons d-flex flex-column col-4">
+                                                <i class='bx bx-user-check font-medium-5 font-weight-bold text-warning'></i> Visit
+                                                <p class="text-info">468</p>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-primary glow px-4">Mark as VIP</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label>Subtotal</label>
+                                            </div>
+                                            <div class="col-md-8 form-group ">
+                                                <div class="position-relative has-icon-left">
+                                                    <input type="number" class="form-control" placeholder="Subtotal">
+                                                    <div class="form-control-position">
+                                                        <i class="bx bx-dollar"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Discount</label>
+                                            </div>
+                                            <div class="col-md-8 form-group ">
+                                                <div class="position-relative has-icon-left">
+                                                    <input type="number" class="form-control" placeholder="Discount">
+                                                    <div class="form-control-position">
+                                                        <i class="bx bx-dollar"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Total</label>
+                                            </div>
+                                            <div class="col-md-8 form-group ">
+                                                <div class="position-relative has-icon-left">
+                                                    $12
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Note</label>
+                                            </div>
+                                            <div class="col-md-8 form-group">
+                                                <div class="position-relative has-icon-left">
+                                                    <fieldset class="form-group">
+                                                        <textarea class="form-control" rows="3" placeholder="Note"></textarea>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-secondary" data-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                    </button>
+                    <button type="button" class="btn btn-primary ml-1" data-dismiss="modal">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Check Out</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="/js/scripts/modal/components-modal.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    Vue.use(new VueSocketIO({
+        connection: io('/')
+    }));
+    new Vue({
+        el: "#checkout",
+        delimiters: ['${', '}'],
+        data: {
+            transactions: [],
+            interval: null,
+            checkoutItem: {
+                client: {
+                    name: '',
+                    phone: ''
+                }
+            }
+        },
+        sockets: {
+            connect: function() {
+                this.$socket.emit('operator', { _id: $('#operator').val() });
+            },
+            checkin: function(data) {
+                if (data) {
+                    this.transactions.push(data);
+                }
+            }
+        },
+        methods: {
+            inProgress: function(item) {
+                var that = this;
+                $.ajax({
+                    type: 'POST',
+                    url: '/checkout/inprogerss/' + item._id
+                }).done(function(e) {
+                    that.$set(item, 'inProgress', e.inProgress);
+                });
+            },
+            checkout: function(item) {
+                item.client.avatar = LetterAvatar(item.client.name || '#' + item.order, 60);
+                this.checkoutItem = item;
+
+                $('#checkoutModel').modal('show');
+            }
+        },
+        filters: {
+            fromNow: function(date) {
+                var offset = new Date().getTime() - new Date(date).getTime();
+                return new Date(offset).toISOString().slice(offset > 3600000 ? 11 : 14, 19) + ' ago';
+            }
+        },
+        created: function() {
+            var that = this;
+            $.ajax({
+                type: 'GET',
+                url: '/checkout/transactions/' + $('#operator').val()
+            }).done(function(e) {
+                that.transactions = e.transactions;
+            });
+            this.interval = setInterval(function() {
+                that.$forceUpdate();
+            }, 1000);
+        },
+        beforeDestroy() {
+            clearInterval(this.interval);
+        }
+    });
+});
+</script>

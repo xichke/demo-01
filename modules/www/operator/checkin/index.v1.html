@@ -1,0 +1,98 @@
+<div id="particles" class="login page-login checkin">
+    <div class="color-overlay"></div>
+    <div class="container-login">
+        <div class="wrap-login">
+            <i id="fullscreen" class="zmdi zmdi-fullscreen zmdi-hc-4x"></i>
+            <section id="phoneInput" class="">
+                <div class="wrap-input">
+                    <input id="txtPhone" class="input" type="text" readonly="readonly">
+                    <span class="focus-input" data-placeholder="&#xf2be;"></span>
+                </div>
+                <div id="spin" class="sk-wave toshow">
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                    <div class="sk-wave-rect"></div>
+                </div>
+                <section id="welcome" class="center toshow">
+                    <h4 class="white">Welcome to</h4>
+                    <h2 class="white" id="operator"></h2>
+                    <h5 class="white">You checked in successfully!</h5>
+                    <h5 class="white">Your order number is</h5>
+                    <h1 class="white" id="order"></h1>
+                    <a class="checkin-refresh" href="/checkin">
+                        <i class="zmdi zmdi-refresh zmdi-hc-5x white"></i>
+                    </a>
+                </section>
+                <div id="keyboard" class="simple-keyboard"></div>
+            </section>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+html body {
+    overflow: hidden !important;
+}
+
+#fullscreen {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: #fff;
+}
+
+#phoneInput {
+    position: relative;
+}
+
+#spin {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+}
+
+pre {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fafafa;
+}
+
+.round {
+    border-radius: 50%;
+}
+</style>
+<script type="text/javascript">
+$(function() {
+    ['webkitfullscreenchange', 'mozfullscreenchange', 'msfullscreenchange', 'fullscreenchange'].forEach(function(e) {
+        document.addEventListener(e, function() {
+            $('#fullscreen').toggleClass('zmdi-fullscreen toshow');
+        });
+    });
+
+    $('#fullscreen').click(function() {
+        var elem = document.documentElement;
+        if ($('#fullscreen').hasClass('zmdi-fullscreen')) {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { /* Firefox */
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { /* IE/Edge */
+                elem.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { /* Firefox */
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { /* IE/Edge */
+                document.msExitFullscreen();
+            }
+        }
+    });
+});
+</script>

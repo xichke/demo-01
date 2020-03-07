@@ -2,7 +2,6 @@
     <div class="color-overlay"></div>
     <div class="container-login">
         <div class="wrap-login">
-            <i id="fullscreen" class="zmdi zmdi-fullscreen zmdi-hc-4x"></i>
             <section id="phoneInput" class="">
                 <div class="wrap-input">
                     <input id="txtPhone" class="input" type="text" readonly="readonly">
@@ -15,11 +14,27 @@
                     <div class="sk-wave-rect"></div>
                     <div class="sk-wave-rect"></div>
                 </div>
+                <section id="nameInput" class="toshow">
+                    <div class="wrap-input">
+                        <input id="txtName" class="input" type="text" placeholder="Name">
+                        <span class="focus-input" data-placeholder="&#xf207;"></span>
+                    </div>
+                    <div class="container-login-form-btn">
+                        <button id="btnCheckin" type="button" class="login-form-btn">
+                            Check In
+                        </button>
+                    </div>
+                </section>
                 <section id="welcome" class="center toshow">
-                    <h4 class="white">Welcome to</h4>
-                    <h2 class="white" id="operator"></h2>
-                    <h5 class="white">You checked in successfully!</h5>
-                    <h5 class="white">Your order number is</h5>
+                    <h4 class="white">Welcome <b id="name"></b> to</h4>
+                    <h1 class="white" id="operator"></h1>
+                    <h6 class="white">You checked in successfully</h6>
+                    <br/><br/>
+                    <h5 class="white">Please have a seat</h5>
+                    <h5 class="white">Someone will be with you shortly</h5>
+                    <br/><br/>
+
+                    <h6 class="white">Your order number is</h6>
                     <h1 class="white" id="order"></h1>
                     <a class="checkin-refresh" href="/checkin">
                         <i class="zmdi zmdi-refresh zmdi-hc-5x white"></i>
@@ -35,13 +50,6 @@ html body {
     overflow: hidden !important;
 }
 
-#fullscreen {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    color: #fff;
-}
-
 #phoneInput {
     position: relative;
 }
@@ -52,47 +60,70 @@ html body {
     right: 20px;
 }
 
-pre {
-    margin: 20px 0;
-    padding: 20px;
-    background: #fafafa;
-}
-
 .round {
     border-radius: 50%;
 }
 </style>
 <script type="text/javascript">
 $(function() {
-    ['webkitfullscreenchange', 'mozfullscreenchange', 'msfullscreenchange', 'fullscreenchange'].forEach(function(e) {
-        document.addEventListener(e, function() {
-            $('#fullscreen').toggleClass('zmdi-fullscreen toshow');
-        });
+    let Keyboard = window.SimpleKeyboard.default;
+    let keyboard = new Keyboard({
+        maxLength: 10,
+        onChange: function(number) {
+            var mask = ['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
+            number = vanillaTextMask.conformToMask(number, mask).conformedValue;
+            $('#txtPhone').val(number);
+            if (number && number.indexOf('_') < 0) {
+                checkin();
+            }
+        },
+        onKeyPress: function(e) {
+            if (e === '{enter}') {
+                checkin();
+            }
+        },
+        layout: {
+            default: ["1 2 3", "4 5 6", "7 8 9", "{bksp} 0 "]
+        },
+        theme: "hg-theme-default hg-layout-numeric numeric-theme"
     });
 
-    $('#fullscreen').click(function() {
-        var elem = document.documentElement;
-        if ($('#fullscreen').hasClass('zmdi-fullscreen')) {
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.mozRequestFullScreen) { /* Firefox */
-                elem.mozRequestFullScreen();
-            } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) { /* IE/Edge */
-                elem.msRequestFullscreen();
+    var show = function(e) {
+            $(e).removeClass('toshow').addClass('animated fadeIn fast');
+        },
+        hide = function(e) {
+            $(e).addClass('animated fadeOut fast').addClass('toshow');
+        };
+    $('#btnCheckin').click(checkin);
+
+    function checkin() {
+        show('#spin');
+        hide('#keyboard');
+        var phone = $('#txtPhone').val(),
+            name = $('#txtName').val();
+        $.ajax({
+            type: 'POST',
+            url: '/checkin',
+            data: JSON.stringify({
+                phone: phone,
+                name: name
+            }),
+            contentType: "application/json",
+            dataType: 'json'
+        }).done(function(e) {
+            if (e.requireName) {
+                hide('#spin');
+                show('#nameInput');
+            } else if (e.success) {
+                hide('#nameInput');
+                $('#operator').html(e.operator);
+                $('#order').html('#' + e.order);
+                $('#name').html(name || e.name);
+                show('#welcome');
+                hide('#spin');
             }
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.mozCancelFullScreen) { /* Firefox */
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) { /* IE/Edge */
-                document.msExitFullscreen();
-            }
-        }
-    });
+
+        });
+    }
 });
 </script>

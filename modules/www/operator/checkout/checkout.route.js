@@ -3,7 +3,7 @@
 module.exports = (app) => {
 	app.get('/checkout', (req, res, next) => {
 		res.render('checkout', {
-			layout: 'admin',
+			layout: 'operator',
 			operator: req.operator._id
 		});
 	});

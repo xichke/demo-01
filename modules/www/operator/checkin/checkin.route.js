@@ -11,15 +11,23 @@ module.exports = function(app) {
 		try {
 			let operator = req.operator,
 				phone = libphone.parsePhoneNumberFromString(req.body.phone, 'US').format('E.164'),
+				name = req.body.name,
 				client = await app.models.Client.findOne({
 					operator: operator._id,
 					phone: phone
 				}).lean();
 			if (!client) {
-				client = await new app.models.Client({
-					operator: operator._id,
-					phone: phone
-				}).save();
+				if (name) {
+					client = await new app.models.Client({
+						operator: operator._id,
+						phone: phone,
+						name: name
+					}).save();
+				} else {
+					return res.json({
+						requireName: true
+					});
+				}
 			}
 			let transaction = await new app.models.Transaction({
 				operator: operator._id,
@@ -32,12 +40,12 @@ module.exports = function(app) {
 				_ts.client.phone = app.utils.phone.mask(_ts.client.phone);
 				app.io.to(operator._id).emit('checkin', _ts);
 			}
-			
+
 			res.json({
 				success: true,
 				operator: operator.name,
 				order: transaction.order,
-				point: ''
+				name: client.name
 			});
 		} catch (err) {
 			throw err;
