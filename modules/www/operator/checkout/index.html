@@ -73,7 +73,7 @@
                                         <h4 class="text-primary"><i class="bx bx-phone"></i> ${checkoutItem.client.phone}</h4>
                                         <div class="d-flex justify-content-around mb-1">
                                             <div class="card-icons d-flex flex-column col-4">
-                                                <i class='bx bx-user-check font-medium-5 font-weight-bold text-warning'></i> Visit
+                                                <i class='bx bx-user-check font-medium-5 font-weight-bold text-warning'></i> Total Visit
                                                 <p class="text-info">12</p>
                                             </div>
                                             <div class="card-icons d-flex flex-column col-4">
@@ -81,7 +81,7 @@
                                                 <p class="text-info">$2945</p>
                                             </div>
                                             <div class="card-icons d-flex flex-column col-4">
-                                                <i class='bx bx-heart font-medium-5 font-weight-bold text-danger'></i> Point
+                                                <i class='bx bx-heart font-medium-5 font-weight-bold text-danger'></i> Bonus Point
                                                 <p class="text-info">2500</p>
                                             </div>
                                         </div>
@@ -99,7 +99,7 @@
                                                 <p class="text-info">468</p>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-primary glow px-4">Follow</button>
+                                        <button type="button" class="btn btn-primary glow px-4">Mark as VIP</button>
                                     </div>
                                 </div>
                             </div>
@@ -229,8 +229,8 @@ $(function() {
         created: function() {
             var that = this;
             $.ajax({
-                type: 'POST',
-                url: '/checkout/' + $('#operator').val()
+                type: 'GET',
+                url: '/checkout/transactions/' + $('#operator').val()
             }).done(function(e) {
                 that.transactions = e.transactions;
             });

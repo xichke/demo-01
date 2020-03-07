@@ -7,7 +7,7 @@ module.exports = (app) => {
 			operator: req.operator._id
 		});
 	});
-	app.post('/checkout/:operator', async (req, res, next) => {
+	app.get('/checkout/transactions/:operator', async (req, res, next) => {
 		try {
 			let transactions = await app.models.Transaction.find({
 				operator: req.params.operator

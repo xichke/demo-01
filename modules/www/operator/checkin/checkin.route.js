@@ -35,7 +35,8 @@ module.exports = function(app) {
 			
 			res.json({
 				success: true,
-				message: `Welcome ${client.name ? client.name : ''} to ${operator.name}. <br/> You checked in successfully.`,
+				operator: operator.name,
+				order: transaction.order,
 				point: ''
 			});
 		} catch (err) {

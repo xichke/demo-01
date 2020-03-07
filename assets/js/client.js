@@ -163,7 +163,7 @@ $(function() {
 		// flipShow('#process', true);
 		// $('#spin').show();
 		$('#spin').removeClass('toshow').addClass('animated fadeIn fast');
-		$('#keyboard').addClass('animated fadeOut fast');
+		$('#keyboard').addClass('animated fadeOut fast').addClass('toshow');
 		var phone = $('#txtPhone').val();
 		$('.loading').show();
 		$.ajax({
@@ -177,7 +177,10 @@ $(function() {
 		}).done(function(e) {
 			$('.loading').hide();
 			if (e.success) {
-				$('#message').html(e.message);
+				$('#operator').html(e.operator);
+				$('#order').html('#' + e.order);
+				$('#welcome').removeClass('toshow').addClass('animated fadeIn fast');
+				$('#spin').addClass('animated fadeOut fast');
 			} else {
 				//
 			}

@@ -15,11 +15,15 @@
                     <div class="sk-wave-rect"></div>
                     <div class="sk-wave-rect"></div>
                 </div>
-                <section id="welcome">
-                    <h3 id="message"></h3>
-                    <!-- <img class="round" width="100" height="100" avatar="a d">
-                    <img class="round" width="100" height="100" avatar="b agd">
-                    <img class="round" width="100" height="100" avatar="cc aedd"> -->
+                <section id="welcome" class="center toshow">
+                    <h4 class="white">Welcome to</h4>
+                    <h2 class="white" id="operator"></h2>
+                    <h5 class="white">You checked in successfully!</h5>
+                    <h5 class="white">Your order number is</h5>
+                    <h1 class="white" id="order"></h1>
+                    <a class="checkin-refresh" href="/checkin">
+                        <i class="zmdi zmdi-refresh zmdi-hc-5x white"></i>
+                    </a>
                 </section>
                 <div id="keyboard" class="simple-keyboard"></div>
             </section>
@@ -46,10 +50,6 @@ html body {
     position: absolute;
     top: 0px;
     right: 20px;
-}
-
-#welcome {
-    text-align: center;
 }
 
 pre {
