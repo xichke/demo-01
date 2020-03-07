@@ -42,7 +42,7 @@ module.exports = function(app) {
 		helpers: helpers
 	}));
 	app.set('view engine', '.html');
-	app.enable('view cache');
+	// app.enable('view cache');
 	app.use((req, res, next) => {
 		var _render = res.render;
 		res.render = function(view, options, fn) {

@@ -20,3 +20,4 @@ session:
 seed:
   - username: 
     password: 
+    isAdmin: 

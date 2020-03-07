@@ -1,44 +1,11 @@
 <section class="users-list-wrapper">
-    <div class="users-list-filter px-1">
-        <form>
-            <div class="row border rounded py-2 mb-2">
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <label for="users-list-verified">Verified</label>
-                    <fieldset class="form-group">
-                        <select class="form-control" id="users-list-verified">
-                            <option value="">Any</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
-                    </fieldset>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <label for="users-list-role">Role</label>
-                    <fieldset class="form-group">
-                        <select class="form-control" id="users-list-role">
-                            <option value="">Any</option>
-                            <option value="User">User</option>
-                            <option value="Staff">Staff</option>
-                        </select>
-                    </fieldset>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-3">
-                    <label for="users-list-status">Status</label>
-                    <fieldset class="form-group">
-                        <select class="form-control" id="users-list-status">
-                            <option value="">Any</option>
-                            <option value="Active">Active</option>
-                            <option value="Close">Close</option>
-                            <option value="Banned">Banned</option>
-                        </select>
-                    </fieldset>
-                </div>
-                <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-center">
-                    <button type="reset" class="btn btn-primary btn-block glow users-list-clear mb-0">Clear</button> &nbsp;
-                    <a href="/admin/user/create" class="btn btn-primary btn-block glow users-list-clear mb-0">Add new user</a>
-                </div>
+        <div class="users-list-filter px-1">
+        <div class="row py-2 mb-2">
+            <div class="col-12 col-sm-6 col-lg-9"></div>
+            <div class="col-12 col-sm-6 col-lg-3 d-flex align-items-center">
+                <a href="/admin/user/create" class="btn btn-primary btn-block glow users-list-clear mb-0">Add a new user</a>
             </div>
-        </form>
+        </div>
     </div>
     <div class="users-list-table">
         <div class="card">
@@ -51,7 +18,6 @@
                                     <th>id</th>
                                     <th>username</th>
                                     <th>name</th>
-                                    <th>last activity</th>
                                     <th>role</th>
                                     <th>status</th>
                                     <th>edit</th>
@@ -62,10 +28,14 @@
                                 <tr>
                                     <td>{{_id}}</td>
                                     <td>{{username}}</td>
-                                    <td>{{firstName}} {{lastName}}</td>
-                                    <td>30/04/2019</td>
-                                    <td>No</td>
-                                    <td>Staff</td>
+                                    <td>{{name}}</td>
+                                    <td>
+                                        {{#if isAdmin}}
+                                        <span class="badge badge-light-danger">admin</span>
+                                        {{else if isOperator}}
+                                        <span class="badge badge-light-primary">operator</span>
+                                        {{/if}}
+                                    </td>
                                     <td>
                                         {{#if isActive}}
                                         <span class="badge badge-light-success">active</span>
@@ -85,38 +55,4 @@
     </div>
 </section>
 <script type="text/javascript">
-$(function() {
-    var s, e = [];
-    0 < $("#users-list-datatable").length && (s = $("#users-list-datatable").DataTable({
-        responsive: !0,
-        columnDefs: [{
-            orderable: !1,
-            targets: [7]
-        }]
-    })), $(document).on("click", "#users-list-datatable tr", function() {
-        $(this).find("td").each(function() {
-            e.push($(this).text().trim())
-        }), localStorage.setItem("usersId", e[0]), localStorage.setItem("usersUsername", e[1]), localStorage.setItem("usersName", e[2]), localStorage.setItem("usersVerified", e[4]), localStorage.setItem("usersRole", e[5]), localStorage.setItem("usersStatus", e[6])
-    }), void 0 !== localStorage.usersId && ($(".users-view-id").html(localStorage.getItem("usersId")), $(".users-view-username").html(localStorage.getItem("usersUsername")), $(".users-view-name").html(localStorage.getItem("usersName")), $(".users-view-verified").html(localStorage.getItem("usersVerified")), $(".users-view-role").html(localStorage.getItem("usersRole")), $(".users-view-status").html(localStorage.getItem("usersStatus")), "Banned" === $(".users-view-status").text() && $(".users-view-status").toggleClass("badge-light-success badge-light-danger"), "Close" === $(".users-view-status").text() && $(".users-view-status").toggleClass("badge-light-success badge-light-warning")), $("#users-list-verified").on("change", function() {
-        var e = $("#users-list-verified").val();
-        s.search(e).draw()
-    }), $("#users-list-role").on("change", function() {
-        var e = $("#users-list-role").val();
-        s.search(e).draw()
-    }), $("#users-list-status").on("change", function() {
-        var e = $("#users-list-status").val();
-        s.search(e).draw()
-    }), 0 < $("#users-language-select2").length && $("#users-language-select2").select2({
-        dropdownAutoWidth: !0,
-        width: "100%"
-    }), 0 < $("#users-music-select2").length && $("#users-music-select2").select2({
-        dropdownAutoWidth: !0,
-        width: "100%"
-    }), 0 < $("#users-movies-select2").length && $("#users-movies-select2").select2({
-        dropdownAutoWidth: !0,
-        width: "100%"
-    }), 0 < $(".birthdate-picker").length && $(".birthdate-picker").pickadate({
-        format: "mmmm, d, yyyy"
-    })
-});
 </script>

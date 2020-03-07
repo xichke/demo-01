@@ -27,12 +27,6 @@
                             </div>
                             <div class="form-group">
                                 <div class="controls">
-                                    <label>Name</label>
-                                    <input v-model="user.name" type="text" class="form-control" placeholder="Name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="controls">
                                     <label>E-mail</label>
                                     <input v-model="user.email" type="email" class="form-control" placeholder="Email">
                                 </div>
@@ -40,16 +34,9 @@
                         </div>
                         <div class="col-12 col-sm-6">
                             <div class="form-group">
-                                <label>Role</label>
-                                <select v-model="user.role" class="form-control">
-                                    <option>admin</option>
-                                    <option>client</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
                                 <div class="controls">
-                                    <label>Birthday</label>
-                                    <input v-model="user.dob" type="email" class="form-control birthdate-picker" placeholder="Birthday yyy-mm-dd">
+                                    <label>Name</label>
+                                    <input v-model="user.name" type="text" class="form-control" placeholder="Name">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -67,9 +54,25 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 col-sm-6">
+                        <div class="col-4 col-sm-4">
                             <fieldset>
-                                <div class="checkbox checkbox-secondary checkbox-glow">
+                                <div class="checkbox checkbox-danger checkbox-glow">
+                                    <input v-model="user.isAdmin" type="checkbox" id="isAdmin">
+                                    <label for="isAdmin">isAdmin</label>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-4 col-sm-4">
+                            <fieldset>
+                                <div class="checkbox checkbox-info checkbox-glow">
+                                    <input v-model="user.isOperator" type="checkbox" id="isOperator">
+                                    <label for="isOperator">isOperator</label>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="col-4 col-sm-4">
+                            <fieldset>
+                                <div class="checkbox checkbox-success checkbox-glow">
                                     <input v-model="user.isActive" type="checkbox" id="isActive">
                                     <label for="isActive">isActive</label>
                                 </div>
