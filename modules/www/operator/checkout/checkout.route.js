@@ -22,4 +22,20 @@ module.exports = (app) => {
 			next(err);
 		}
 	});
+
+	app.post('/checkout/inprogerss/:transaction', async (req, res, next) => {
+		try {
+			let transaction = await app.models.Transaction.findOneAndUpdate({
+				_id: req.params.transaction
+			}, {
+				inProgress: new Date()
+			}).populate('client').lean();
+			res.json({
+				inProgress: new Date()
+			})
+		} catch (err) {
+			next(err);
+		}
+	});
+	
 };

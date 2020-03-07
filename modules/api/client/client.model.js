@@ -27,6 +27,7 @@ let _schema = new Schema({
     type: String,
     trim: true
   },
+  point: Number,
   updated: {
     type: Date
   },

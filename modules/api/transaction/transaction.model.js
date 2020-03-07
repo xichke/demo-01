@@ -24,6 +24,9 @@ let _schema = new Schema({
 		type: Date,
 		default: Date.now
 	},
+	inProgress: {
+		type: Date
+	},
 	checkedOut: {
 		type: Date
 	},
