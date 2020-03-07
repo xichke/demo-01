@@ -13,8 +13,9 @@ module.exports = (app) => {
 		done(null, user._id);
 	});
 	passport.deserializeUser((id, done) => User.findOne({
-		_id: id
-	}, 'username roles', done));
+		_id: id,
+		isActive: true
+	}, done));
 	passport.use('mongo',
 		new LocalStrategy({
 			usernameField: 'username',
@@ -59,7 +60,7 @@ module.exports = (app) => {
 		if (req.user) {
 			res.locals.user = {
 				username: req.user.username,
-				role: req.user.roles.join(' ')
+				name: req.user.name
 			};
 		}
 		next();

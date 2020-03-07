@@ -3,6 +3,8 @@ db:
   uri: mongodb://localhost:27017/fancy
   debug: true
 saltRounds: 10
+
+master: 1eopv7sTJ6B4986O
 morgan: dev
 token:
   secret: asdrgt5wefrw235t
@@ -14,3 +16,7 @@ session:
     name: tf.sid
     secret: ~6gmC8.v!}w1Z;sW
     secure: false # Ensures the browser only sends the cookie over HTTPS
+
+seed:
+  - username: 
+    password: 

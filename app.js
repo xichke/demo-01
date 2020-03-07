@@ -9,8 +9,10 @@ const config = require('config'),
 
 [
 	'./modules/shared/db',
-	'./modules/shared/middleware',
-	'./modules/www/login/passport',
+	'./modules/auth/passport',
+	'./modules/shared/app.init',
+	'./modules/auth/seed',
+	'./modules/**/*middleware.js',
 	'./modules/**/*route.js',
 	'./modules/shared/404',
 	'./modules/shared/error-handler'

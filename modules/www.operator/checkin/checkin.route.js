@@ -3,25 +3,18 @@ const libphone = require('libphonenumber-js');
 
 module.exports = function(app) {
 	app.get('/checkin', (req, res) => {
-		// if (!req.isAuthenticated())
-		// 	return res.redirect(`/login?ref=${req.originalUrl}`);
 		res.render('checkin', {
 			layout: 'client'
 		});
 	});
 	app.post('/checkin', async (req, res) => {
 		try {
-			let phone = libphone
-				.parsePhoneNumberFromString(req.body.phone, 'US')
-				.format('E.164');
-			let operator = await app.models.Operator.findOne({
-					manager: req.user._id
-				}).lean(),
-				client = await app.models.Client.findOne({
-					operator: operator._id,
-					phone: phone
-				}).lean();
-			console.log('------<<< client ', client);
+			let operator = req.operator,
+				phone = libphone.parsePhoneNumberFromString(req.body.phone, 'US').format('E.164');
+			client = await app.models.Client.findOne({
+				operator: operator._id,
+				phone: phone
+			}).lean();
 			if (!client) {
 				client = await new app.models.Client({
 					operator: operator._id,

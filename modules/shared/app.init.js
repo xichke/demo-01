@@ -9,6 +9,7 @@ const config = require('config'),
 	express = require('express'),
 	path = require('path'),
 	exphbs = require('express-handlebars'),
+	helpers = require('handlebars-helpers')(),
 	bodyParser = require('body-parser'),
 	utils = require('./utils'),
 	views = utils.match('modules/**/*.html').map(e => `../${e}`);
@@ -17,7 +18,8 @@ module.exports = function(app) {
 	if (config.morgan)
 		app.use(morgan(config.morgan));
 	app.use(methodOverride());
-	app.use(cookieParser(config.token.secret));
+	// app.use(cookieParser(config.token.secret));
+	app.use(cookieParser());
 	app.use(cors());
 	app.use(express.static('assets'));
 	app.use(bodyParser.urlencoded({
@@ -36,9 +38,11 @@ module.exports = function(app) {
 	app.disable('x-powered-by');
 	app.set('views', './views');
 	app.engine('.html', exphbs({
-		extname: '.html'
+		extname: '.html',
+		helpers: helpers
 	}));
 	app.set('view engine', '.html');
+	app.enable('view cache');
 	app.use((req, res, next) => {
 		var _render = res.render;
 		res.render = function(view, options, fn) {
@@ -48,7 +52,6 @@ module.exports = function(app) {
 					match = views.find(e => {
 						return parttern.test(e);
 					});
-				console.log('===========>>> match : ', match, parttern);
 				view = match || view;
 			}
 			_render.call(this, view, options, fn);

@@ -27,5 +27,5 @@ module.exports = function(app) {
 			useUnifiedTopology: true,
 			useCreateIndex: true
 		});
-	})()
+	})();
 };

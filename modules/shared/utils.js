@@ -41,16 +41,36 @@ let maskPhoneNumber = (e) => {
 	return '';
 };
 
+let date = {
+	today: () => {
+		let now = moment();
+		return {
+			start: now.startOf('day').toString(),
+			end: now.endOf('day').toString()
+		};
+	},
+	thisWeek: () => {
+		let now = moment();
+		return {
+			start: now.startOf('isoWeek').toString(),
+			end: now.endOf('isoWeek').toString()
+		};
+	},
+	thisMonth: () => {
+		let now = moment();
+		return {
+			start: now.startOf('month').toString(),
+			end: now.endOf('month').toString()
+		};
+	},
+};
+
+let {
+	start
+} = date.thisWeek();
+
 module.exports = {
 	match: match,
 	maskPhoneNumber: maskPhoneNumber,
-	date: {
-		today: () => {
-			let now = moment();
-			return {
-				start: now.startOf('day').toString(),
-				end: now.endOf('day').toString()
-			};
-		}
-	}
+	date: date
 };

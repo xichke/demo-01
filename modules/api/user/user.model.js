@@ -5,12 +5,7 @@ const config = require('config'),
 	mongoose = require('mongoose');
 
 var UserSchema = new mongoose.Schema({
-	firstName: {
-		type: String,
-		trim: true,
-		default: ''
-	},
-	lastName: {
+	name: {
 		type: String,
 		trim: true,
 		default: ''
@@ -41,18 +36,15 @@ var UserSchema = new mongoose.Schema({
 		type: Date
 	},
 	password: String,
-	roles: {
-		type: [{
-			type: String,
-			enum: ['root', 'admin', 'client']
-		}],
-		default: []
-	},
 	isActive: {
 		type: Boolean,
 		default: true
 	},
-	isRoot: {
+	isAdmin: {
+		type: Boolean,
+		default: false
+	},
+	isOperator: {
 		type: Boolean,
 		default: false
 	},
@@ -63,16 +55,9 @@ var UserSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now
 	}
-}, {
-	toJSON: {
-		virtuals: true
-	},
-	toObject: {
-		virtuals: true
-	}
 });
 
-UserSchema.pre('save', async (next) => {
+UserSchema.pre('save', async function(next) {
 	try {
 		if (this.isModified('password')) {
 			this.password = await bcrypt.hash(this.password, config.saltRounds);

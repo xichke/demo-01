@@ -3,7 +3,7 @@
 module.exports = function(app) {
 	app.get('/admin', async (req, res) => {
 		try {
-			res.render('admin', {
+			res.render('www.admin', {
 				layout: 'admin',
 				count: {
 					user: await app.models.User.countDocuments({}).lean(),

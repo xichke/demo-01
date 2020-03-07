@@ -16,7 +16,7 @@ module.exports = function(app) {
 			user: '{}'
 		});
 	});
-	app.get('/admin/user/:id', async (req, res) => {
+	app.get('/admin/user/:id', async (req, res, next) => {
 		try {
 			let user = await app.models.User.findOne({
 				_id: req.params.id
@@ -30,7 +30,9 @@ module.exports = function(app) {
 				user: JSON.stringify(user)
 			});
 		} catch (err) {
-			res.status(500).send(err);
+			throw err;
+			next(err);
+			// res.status(500).send(err);
 		}
 	});
 };

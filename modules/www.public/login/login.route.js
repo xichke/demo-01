@@ -7,6 +7,9 @@ module.exports = (app) => {
 			layout: 'client'
 		});
 	});
+	app.get('/logout', (req, res) => {
+		res.redirect('/');
+	});
 	app.post('/login', (req, res, next) => {
 		app.get('passport').authenticate('mongo', (err, user) => {
 			if (!err) {

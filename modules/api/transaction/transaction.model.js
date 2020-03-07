@@ -28,10 +28,10 @@ let _schema = new Schema({
 		type: Date
 	},
 	status: {
-		type: [{
+		type: {
 			type: String,
 			enum: ['waiting', 'in progress', 'done']
-		}],
+		},
 		default: ['waiting']
 	}
 });
