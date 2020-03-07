@@ -12,14 +12,18 @@ module.exports = async (server, app) => {
 	// });
 
 	io.on('connection', function(socket) {
-		console.log('a user connected');
-		socket.emit('checkin', 'hello');
 		socket.on('disconnect', function() {
-			console.log('user disconnected');
+			//
+		});
+
+		socket.on('operator', function(data) {
+			socket.join(data._id);
 		});
 	});
 
 	app.io = io;
+
+	//socket.broadcast.to('priv/John').emit(...)
 
 
 	// io.on('connection', (socket) => {

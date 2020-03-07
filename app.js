@@ -7,7 +7,7 @@ const config = require('config'),
 	app = express(),
 	utils = require('./modules/shared/utils');
 
-app.set('utils', utils);
+app.utils = utils;
 [
 	'./modules/app/init',
 	'./modules/shared/db',

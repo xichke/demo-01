@@ -1,27 +1,25 @@
 'use strict';
 
 module.exports = (app) => {
-	app.get('/checkout', async (req, res) => {
+	app.get('/checkout', (req, res, next) => {
+		res.render('checkout', {
+			layout: 'admin',
+			operator: req.operator._id
+		});
+	});
+	app.post('/checkout/:operator', async (req, res, next) => {
 		try {
 			let transactions = await app.models.Transaction.find({
-				operator: req.operator._id
+				operator: req.params.operator
 			}).today().populate('client').lean();
-
 			transactions.forEach(e => {
-				e.client.phone = app.utils.maskPhoneNumber(e.client.phone);
+				e.client.phone = app.utils.phone.mask(e.client.phone);
 			});
-			console.log('=====>>> transactions ', transactions);
-
-			res.render('checkout', {
-				layout: 'admin',
+			res.json({
 				transactions: transactions
-			});
+			})
 		} catch (err) {
-			throw err;
-			res.render('checkout', {
-				layout: 'admin',
-				error: err
-			});
+			next(err);
 		}
 	});
 };

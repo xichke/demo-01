@@ -33,37 +33,38 @@ function match(patterns, excludes) {
 	return output;
 }
 
-let maskPhoneNumber = (e) => {
-	if (e) {
-		let ending = e.slice(e.length - 4);
-		return `(***) *** ${ending}`;
-	}
-	return '';
-};
-
 let date = {
-	today: () => {
-		let now = moment();
-		return {
-			start: now.startOf('day').toString(),
-			end: now.endOf('day').toString()
-		};
+		today: () => {
+			let now = moment();
+			return {
+				start: now.startOf('day').toString(),
+				end: now.endOf('day').toString()
+			};
+		},
+		thisWeek: () => {
+			let now = moment();
+			return {
+				start: now.startOf('isoWeek').toString(),
+				end: now.endOf('isoWeek').toString()
+			};
+		},
+		thisMonth: () => {
+			let now = moment();
+			return {
+				start: now.startOf('month').toString(),
+				end: now.endOf('month').toString()
+			};
+		},
 	},
-	thisWeek: () => {
-		let now = moment();
-		return {
-			start: now.startOf('isoWeek').toString(),
-			end: now.endOf('isoWeek').toString()
-		};
-	},
-	thisMonth: () => {
-		let now = moment();
-		return {
-			start: now.startOf('month').toString(),
-			end: now.endOf('month').toString()
-		};
-	},
-};
+	phone = {
+		mask: function(e) {
+			if (e) {
+				let ending = e.slice(e.length - 4);
+				return `(***) *** ${ending}`;
+			}
+			return '';
+		}
+	};
 
 let {
 	start
@@ -71,6 +72,6 @@ let {
 
 module.exports = {
 	match: match,
-	maskPhoneNumber: maskPhoneNumber,
-	date: date
+	date: date,
+	phone: phone
 };

@@ -56,6 +56,10 @@ _schema.pre('save', async function(next) {
 	}
 });
 
+_schema.post('save', async function() {
+	this.populate('client');
+});
+
 _schema.query.today = function() {
 	let {
 		start,

@@ -1,4 +1,4 @@
-<section id="dashboard-ecommerce">
+<section id="checkout">
     <div class="row">
         <div class="col-xl-12 col-12 dashboard-marketing-campaign">
             <div class="card marketing-campaigns">
@@ -54,7 +54,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Phone Number</th>
+                                <th>Client</th>
                                 <th>Checked in</th>
                                 <th>Charges</th>
                                 <th>Status</th>
@@ -62,15 +62,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{#each transactions}}
-                            <tr>
-                                <td class="py-1">{{order}}</td>
-                                <td class="py-1">{{client.phone}}</td>
+                            <tr v-for="transaction in transactions" :key="transaction._id">
+                                <td class="py-1">${transaction.order}</td>
+                                <td class="py-1">${transaction.client.phone}</td>
                                 <td class="py-1">
-                                    <span class="moment-relative" data-date="{{checkedIn}}"></span>
+                                    <span class="moment-relative" data-date="">${transaction.checkedIn | fromNow}</span>
                                 </td>
                                 <td class="py-1">$5,536</td>
-                                <td class="text-success py-1">{{status}}</td>
+                                <td class="text-success py-1">${status}</td>
                                 <td class="text-center py-1">
                                     <div class="dropdown">
                                         <span class="bx bx-dots-vertical-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu"></span>
@@ -81,13 +80,13 @@
                                     </div>
                                 </td>
                             </tr>
-                            {{/each}}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+    <input type="hidden" id="operator" value="{{operator}}">
 </section>
 <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#inlineForm">
     Launch Modal
@@ -127,19 +126,51 @@
         </div>
     </div>
 </div>
-<link rel="stylesheet" type="text/css" href="/css/pages/dashboard-ecommerce.min.css">
-<script src="/js/scripts/pages/dashboard-ecommerce.min.js"></script>
 <script src="/js/scripts/modal/components-modal.min.js"></script>
 <script type="text/javascript">
 $(function() {
-    $('.moment-relative').each(function(i, obj) {
-        console.log($(this).attr('data-date'));
-        $(this).html(moment($(this).attr('data-date')).fromNow());
-    });
+    Vue.use(new VueSocketIO({
+        connection: io('/')
+    }));
+    new Vue({
+        el: "#checkout",
+        delimiters: ['${', '}'],
+        data: {
+            transactions: [],
+            interval: null
+        },
+        sockets: {
+            connect: function() {
+                this.$socket.emit('operator', { _id: $('#operator').val() });
+            },
+            checkin: function(data) {
+                if(data){
+                    this.transactions.push(data);
+                }
+            }
+        },
+        methods: {
 
-    const socket = io('http://localhost:3000');
-    socket.on('checkin', function(data) {
-        console.log(data);
+        },
+        filters: {
+            fromNow: function(date) {
+                var offset = new Date().getTime() - new Date(date).getTime();
+                return new Date(offset).toISOString().slice(offset > 3600000 ? 11 : 14, 19) + ' ago';
+            }
+        },
+        created: function() {
+            var that = this;
+            $.ajax({
+                type: 'POST',
+                url: '/checkout/' + $('#operator').val()
+            }).done(function(e) {
+                that.transactions = e.transactions;
+            });
+            this.interval = setInterval(() => this.$forceUpdate(), 1000)
+        },
+        beforeDestroy() {
+            clearInterval(this.interval);
+        }
     });
 });
 </script>
