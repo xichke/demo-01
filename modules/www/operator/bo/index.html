@@ -1,5 +1,34 @@
 <section id="dashboard-ecommerce">
     <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Clients</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body pl-0">
+                        <canvas id="userChart" height="300" width="940"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Clients</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body pl-0">
+                        <canvas id="userLineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="row">
         <!-- Greetings Content Starts -->
         <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
             <div class="card">
@@ -333,3 +362,88 @@
 </section>
 <link rel="stylesheet" type="text/css" href="/css/pages/dashboard-ecommerce.min.css">
 <script src="/js/scripts/pages/dashboard-ecommerce.min.js"></script>
+<script src="/js/chart.js"></script>
+<style type="text/css">
+canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+</style>
+<script type="text/javascript">
+$(function() {
+    (function() {
+        var config = {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [10, 20, 30],
+                    backgroundColor: ['#ffc168', '#00aeff', '#0abf53'],
+                    label: 'Dataset 1'
+                }],
+                labels: [
+                    'New clients',
+                    'Clients visited 1- 5 times',
+                    'Clients Visited 5+ times'
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        };
+        var ctx = document.getElementById('userChart').getContext('2d');
+        window.myPie = new Chart(ctx, config);
+    })();
+
+    //line
+    (function() {
+        var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var config = {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'Client visits',
+                    backgroundColor: '#ffc168',
+                    borderColor: '#00aeff',
+                    data: [10, 50, 60, 100, 125, 160, 90],
+                    fill: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Client visits'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Month'
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Value'
+                        }
+                    }]
+                }
+            }
+        };
+        var ctx = document.getElementById('userLineChart').getContext('2d');
+        window.myLine = new Chart(ctx, config);
+    })();
+});
+</script>

@@ -8,15 +8,17 @@
                         <table class="table table-striped table-dark mb-0">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th>Name</th>
-                                    <th>Phone Number</th>
-                                    <th>Checked in</th>
-                                    <th>
+                                    <th class="w50">
                                         <div class="custom-control custom-switch custom-switch-success">
                                             <input type="checkbox" v-model="isDone" class="custom-control-input" id="customSwitchcolor2">
                                             <label class="custom-control-label" for="customSwitchcolor2"></label>
                                         </div>
+                                    </th>
+                                    <th>Name</th>
+                                    <th class="w180">Phone Number</th>
+                                    <th>Checked in</th>
+                                    <th>
+                                        Status
                                     </th>
                                 </tr>
                             </thead>
@@ -28,7 +30,6 @@
                                         </div>
                                     </td>
                                     <td><b>${transaction.client.name}</b>
-                                        
                                     </td>
                                     <td>${transaction.client.phone}</td>
                                     <td>
@@ -44,7 +45,10 @@
                                                 <label class="white" for="isDone">Done</label>
                                             </div>
                                         </fieldset>
-                                        <span class="text-success" v-if="transaction.checkedOut">Checked out<br /> ${transaction.checkedOut | fromNow}</span>
+                                        <section v-if="transaction.checkedOut">
+                                            <div class="text-success text-center">${transaction.checkedOut | fromNow}</div>
+                                            <div class="badge badge-pill badge-success mr-1 mb-1 display-block">Checked Out</div>
+                                        </section>
                                     </td>
                                     </td>
                                 </tr>
