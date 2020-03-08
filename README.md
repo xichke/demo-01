@@ -40,3 +40,13 @@ db.logmsg.findOne()
 
 `window.navigator.standalone`
 
+
+```
+<div class="card">
+    <div class="card-content">
+        <div class="card-body">
+            
+        </div>
+    </div>
+</div>
+```

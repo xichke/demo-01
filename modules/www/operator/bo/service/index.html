@@ -1,0 +1,86 @@
+<section id="app" class="users-list-wrapper">
+    <div class="row">
+        <div class="users-list-table col-8">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="w50">id</th>
+                                        <th>name</th>
+                                        <th class="w50">edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each services}}
+                                    <tr>
+                                        <td>{{_id}}</td>
+                                        <td>{{name}}</td>
+                                        <td>
+                                            <a href="#" onClick="remove('{{_id}}');"><i class="bx bxs-trash-alt"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <input type="text" id="txtName" class="form-control" placeholder="Name">
+                                </div>
+                                <div class="col-sm-12 d-flex justify-content-end">
+                                    <button type="button" id="btnCreate" class="btn btn-primary btn-block glow users-list-clear mb-0">Create a new service</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+$(function() {
+    $('#btnCreate').click(function() {
+        var name = $('#txtName').val();
+        if (name) {
+            $.ajax({
+                type: 'POST',
+                url: '/bo/service',
+                data: JSON.stringify({
+                    name: name
+                }),
+                contentType: 'application/json'
+            }).done(function(e) {
+                window.location.reload();
+            });
+        }
+    });
+});
+
+function remove(id) {
+    if (id && confirm('Are you sure to delete?')) {
+        $.ajax({
+            type: 'DELETE',
+            url: '/bo/service/' + id,
+            data: JSON.stringify({
+                _id: id
+            })
+        }).done(function(e) {
+            window.location.reload();
+        });
+    }
+}
+</script>

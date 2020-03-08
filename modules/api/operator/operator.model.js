@@ -3,6 +3,21 @@
 const mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
+let StaffSchema = new Schema({
+  name: {
+    type: String,
+    trim: true
+  }
+});
+
+let ServiceSchema = new Schema({
+  name: {
+    type: String,
+    trim: true
+  },
+  price: Number
+});
+
 let _schema = new Schema({
   name: {
     type: String,
@@ -68,6 +83,8 @@ let _schema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  staffs: [StaffSchema],
+  services: [ServiceSchema],
   isActive: Boolean,
   updated: {
     type: Date
