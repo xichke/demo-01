@@ -1,0 +1,76 @@
+<nav class="header-navbar navbar-expand-lg navbar navbar-with-menu navbar-fixed bg-primary navbar-brand-center">
+    <div class="navbar-header d-xl-block">
+        <ul class="nav navbar-nav logo flex-row">
+            <li class="nav-item">
+                <a class="navbar-brand" href="/bo">
+                    <h2 class="brand-text mb-0">{{operator.name}}</h2>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-wrapper">
+        <div class="navbar-container content">
+            <div class="navbar-collapse" id="navbar-mobile">
+                <div class="mr-auto float-left bookmark-wrapper d-flex align-items-center">
+                </div>
+                <ul class="nav navbar-nav float-right d-flex align-items-center">
+                    <li class="dropdown dropdown-notification nav-item">
+                        <a class="nav-link nav-link-label" href="#">
+                            <i class="ficon bx bx-bell bx-tada bx-flip-horizontal">
+                            </i>
+                            <span class="badge badge-pill badge-danger badge-up">5</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-user-link" href="#">
+                            <div class="user-nav d-lg-flex d-none">
+                                <span class="user-name">{{user.username}}</span>
+                                <span class="user-status">{{user.role}}</span>
+                            </div>
+                            <span>
+                                <img class="round" width="40" height="40" avatar="{{user.name}}">
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="header-navbar navbar-expand-sm navbar navbar-horizontal navbar-fixed navbar-light navbar-without-dd-arrow" role="navigation" data-menu="menu-wrapper">
+    <div class="shadow-bottom"></div>
+    <div class="navbar-container main-menu-content" data-menu="menu-container">
+        <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation" data-icon-style="filled">
+            <li class="dropdown nav-item">
+                <a class="dropdown-toggle nav-link" href="/bo">
+                    <i class="bx bx-home font-medium-5"></i><span>Home</span>
+                </a>
+            </li>
+            <li class="dropdown nav-item">
+                <a class="dropdown-toggle nav-link" href="/bo/staff">
+                    <i class="bx bx-user-plus font-medium-5"></i><span>Staffs</span>
+                </a>
+            </li>
+            <li class="dropdown nav-item">
+                <a class="dropdown-toggle nav-link" href="/bo/service">
+                    <i class="bx bxs-cog font-medium-5"></i><span>Services</span>
+                </a>
+            </li>
+            <li class="dropdown nav-item">
+                <a class="dropdown-toggle nav-link" href="/bo/client">
+                    <i class="bx bxs-user font-medium-5"></i><span>Clients</span>
+                </a>
+            </li>
+            <li class="dropdown nav-item">
+                <a class="dropdown-toggle nav-link" href="/bo/sms">
+                    <i class="bx bxs-chat font-medium-5"></i><span>SMS</span>
+                </a>
+            </li>
+            <li class="dropdown nav-item">
+                <a class="dropdown-toggle nav-link" href="/bo/review">
+                    <i class="bx bx-star font-medium-5"></i><span>Review</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

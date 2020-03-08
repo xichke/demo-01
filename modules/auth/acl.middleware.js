@@ -16,7 +16,7 @@ module.exports = (app) => {
 	});
 
 	//operator
-	app.use(['/checkout', '/checkin'], async (req, res, next) => {
+	app.use(['/bo*', '/checkout', '/checkin'], async (req, res, next) => {
 		try {
 			if (!req.user) {
 				return forbidden(req, res);
@@ -26,6 +26,7 @@ module.exports = (app) => {
 				isActive: true
 			}).lean();
 			if (req.operator) {
+				res.locals.operator = req.operator;
 				next();
 			} else {
 				return forbidden(req, res);

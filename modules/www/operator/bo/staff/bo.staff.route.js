@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function(app) {
-	app.get('/bo', (req, res) => {
-		res.render('bo', {
+	app.get('/bo/staff', (req, res) => {
+		res.render('bo/staff', {
 			layout: 'backoffice'
 		});
 	});
