@@ -1,7 +1,7 @@
 <section id="checkout">
     <div class="row match-height">
-        <div class="col-xl-6 col-lg-12">
-            <div class="card bg-transparent shadow-none border">
+        <div class="col-12">
+            <div class="card bg-transparent shadow-none">
                 <div class="card-content">
                     <div class="card-body">
                         <a class="icon-refresh" href="#" v-on:click="refresh()"><i class="zmdi zmdi-refresh zmdi-hc-2x white"></i></a>
@@ -16,10 +16,8 @@
                                     </th>
                                     <th>Name</th>
                                     <th class="w180">Phone Number</th>
-                                    <th>Checked in</th>
-                                    <th>
-                                        Status
-                                    </th>
+                                    <th class="w180">Checked in</th>
+                                    <th class="w180">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,8 +39,8 @@
                                     <td>
                                         <fieldset v-if="!transaction.checkedOut">
                                             <div class="checkbox checkbox-info checkbox-glow">
-                                                <input type="checkbox" id="isDone" v-on:click="checkout(transaction)">
-                                                <label class="white" for="isDone">Done</label>
+                                                <input type="checkbox" :id="transaction._id" v-on:click="checkout(transaction)">
+                                                <label class="white" :for="transaction._id">Done</label>
                                             </div>
                                         </fieldset>
                                         <section v-if="transaction.checkedOut">
@@ -62,12 +60,14 @@
     <input type="hidden" id="operator" value="{{operator}}">
 </section>
 <style type="text/css">
+    html body{background-color: #40566F; margin:0; padding:0;}
 .content-wrapper {
     padding: 0 !important;
 }
 
 .card-body {
-    padding: 5px !important;
+    padding: 0px !important;
+    margin: 0px !important;
     position: relative;
 }
 
