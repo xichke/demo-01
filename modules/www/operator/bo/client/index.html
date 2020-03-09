@@ -1,0 +1,31 @@
+<section id="app" class="users-list-wrapper">
+    <div class="row">
+        <div class="users-list-table col-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>name</th>
+                                        <th>phone number</th>
+                                        <th>registerd</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each clients}}
+                                    <tr>
+                                        <td>{{name}}</td>
+                                        <td>{{phone}}</td>
+                                        <td>{{created}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
