@@ -4,51 +4,17 @@ module.exports = function(app) {
 	app.get('/bo/service', (req, res) => {
 		res.render('bo/service', {
 			layout: 'backoffice',
-			services: req.operator.services
+			services: JSON.stringify(req.operator.services || [])
 		});
-	});
-
-	app.post('/bo/service/category', async (req, res, next) => {
-		try {
-			let operator = await app.models.Operator.findOneAndUpdate(req.operator, {
-				$push: {
-					services: {
-						name: req.body.name
-					}
-				}
-			}).lean();
-			res.json({
-				success: true
-			});
-		} catch (err) {
-			next(err);
-		}
 	});
 
 	app.post('/bo/service', async (req, res, next) => {
 		try {
+			req.body = req.body.filter(e => e.name);
+			req.body.forEach(e => e.services = e.services.filter(x => x.name));
 			let operator = await app.models.Operator.findOneAndUpdate(req.operator, {
-				$push: {
-					services: {
-						name: req.body.name
-					}
-				}
-			}).lean();
-			res.json({
-				success: true
-			});
-		} catch (err) {
-			next(err);
-		}
-	});
-
-	app.delete('/bo/service/:id', async (req, res, next) => {
-		try {
-			let operator = await app.models.Operator.findOneAndUpdate(req.operator, {
-				$pull: {
-					services: {
-						_id: req.params.id
-					}
+				$set: {
+					services: req.body
 				}
 			}).lean();
 			res.json({

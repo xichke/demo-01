@@ -4,15 +4,15 @@
         <div class="col-9">
             <section id="multiple-column-form">
                 <div class="col-12">
-                    <div class="card" v-for="item in services" :key="item.name">
-                        <i class="delete zmdi zmdi-delete zmdi-hc-lg danger" @click="remove(index, item.services)"></i>
+                    <div class="card" v-for="(item, index) in services" :key="item._id">
+                        <i class="delete zmdi zmdi-delete zmdi-hc-lg danger" v-on:click="remove(index, services)"></i>
                         <div class="card-header">
                             <input type="text" class="form-control col-10" placeholder="Name" v-model="item.name">
                         </div>
                         <div class="card-content">
                             <div class="card-body">
                                 <div class="form-body">
-                                    <div class="row" v-for="(i, index) in item.services" :key="i.name">
+                                    <div class="row" v-for="(i, index) in item.services" :key="i._id">
                                         <div class="col-2"></div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-label-group">
@@ -21,12 +21,12 @@
                                         </div>
                                         <div class="col-md-2 col-12">
                                             <div class="form-label-group">
-                                                <input type="text" class="form-control" placeholder="Price" v-model="i.price">
+                                                <input type="number" class="form-control" placeholder="Price" v-model="i.price">
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-12">
                                             <div class="form-label-group">
-                                                <i class="zmdi zmdi-delete zmdi-hc-lg danger" @click="remove(index, item.services)"></i>
+                                                <i class="zmdi zmdi-delete zmdi-hc-lg danger" v-on:click="remove(index, item.services)"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -36,10 +36,15 @@
                         </div>
                     </div>
                     <i class="add zmdi zmdi-plus zmdi-hc-4x info" @click="addCategory()"></i>
+                    <button type="button" v-on:click="save" class="btn btn-primary btn-block glow users-list-clear mb-0" :disabled="loading">Save changes
+                        <span v-if="loading" class="spinner-grow spinner-grow-sm"></span>
+                    </button>
+                    <br /><br /><br />
                 </div>
             </section>
         </div>
         <div class="col"></div>
+        <input id="services" type="hidden" value="{{services}}">
     </div>
 </section>
 <style type="text/css">
@@ -58,49 +63,10 @@ $(function() {
     new Vue({
         el: "#app",
         data: {
-            services: [{
-                name: 'Hair',
-                services: [{
-                    name: 'Haircut',
-                    price: '$50'
-                }, {
-                    name: 'Cut & Blowdry',
-                    price: '$50'
-                }, {
-                    name: 'Hair treatment',
-                    price: '$50'
-                }, {
-                    name: 'Colouring',
-                    price: '$50'
-                }, {
-                    name: 'Cut & Blowdry',
-                    price: '$50'
-                }, {
-                    name: 'Highlights',
-                    price: '$50'
-                }]
-            }, {
-                name: 'Massage',
-                services: [{
-                    name: 'Full Body Massage',
-                    price: '$50'
-                }, {
-                    name: 'Back, Neck & Shoulders',
-                    price: '$50'
-                }]
-            }, {
-                name: 'Facials',
-                services: [{
-                    name: 'Luxury Facial',
-                    price: '$50'
-                }, {
-                    name: 'Pro Acne Facial',
-                    price: '$50'
-                }]
-            }]
+            services: [],
+            loading: false
         },
         methods: {
-            submit: function(e) {},
             remove: function(index, e) {
                 e.splice(index, 1);
             },
@@ -118,7 +84,21 @@ $(function() {
                         price: ''
                     }]
                 });
+            },
+            save: function() {
+                this.loading = true
+                $.ajax({
+                    type: 'POST',
+                    url: '/bo/service',
+                    data: JSON.stringify(this.services),
+                    contentType: 'application/json'
+                }).done(function(e) {
+                    window.location.reload();
+                });
             }
+        },
+        created: function() {
+            this.services = JSON.parse($('#services').val());
         }
     });
 });

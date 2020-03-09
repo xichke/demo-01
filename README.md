@@ -50,3 +50,12 @@ db.logmsg.findOne()
     </div>
 </div>
 ```
+
+
+```
+.findOneAndUpdate(item, {
+  $set: { //$set || $push || $pull
+    field: {value}
+  }
+})
+```
