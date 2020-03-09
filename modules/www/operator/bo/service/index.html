@@ -1,84 +1,125 @@
 <section id="app" class="users-list-wrapper">
     <div class="row">
-        <div class="users-list-table col-8">
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>name</th>
-                                        <th class="w50"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{#each services}}
-                                    <tr>
-                                        <td>{{name}}</td>
-                                        <td>
-                                            <a href="#" onClick="remove('{{_id}}');"><i class="bx bxs-trash-alt"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    {{/each}}
-                                </tbody>
-                            </table>
+        <div class="col"></div>
+        <div class="col-9">
+            <section id="multiple-column-form">
+                <div class="col-12">
+                    <div class="card" v-for="item in services" :key="item.name">
+                        <i class="delete zmdi zmdi-delete zmdi-hc-lg danger" @click="remove(index, item.services)"></i>
+                        <div class="card-header">
+                            <input type="text" class="form-control col-10" placeholder="Name" v-model="item.name">
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-4">
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-body">
-                        <div class="form-body">
-                            <div class="row">
-                                <div class="col-md-12 form-group">
-                                    <input type="text" id="txtName" class="form-control" placeholder="Name">
-                                </div>
-                                <div class="col-sm-12 d-flex justify-content-end">
-                                    <button type="button" id="btnCreate" class="btn btn-primary btn-block glow users-list-clear mb-0">Create a new service</button>
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="form-body">
+                                    <div class="row" v-for="(i, index) in item.services" :key="i.name">
+                                        <div class="col-2"></div>
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-label-group">
+                                                <input type="text" class="form-control" placeholder="Name" v-model="i.name">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-12">
+                                            <div class="form-label-group">
+                                                <input type="text" class="form-control" placeholder="Price" v-model="i.price">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 col-12">
+                                            <div class="form-label-group">
+                                                <i class="zmdi zmdi-delete zmdi-hc-lg danger" @click="remove(index, item.services)"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <i class="add zmdi zmdi-plus zmdi-hc-4x info" @click="add(item.services)"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <i class="add zmdi zmdi-plus zmdi-hc-4x info" @click="addCategory()"></i>
                 </div>
-            </div>
+            </section>
         </div>
+        <div class="col"></div>
     </div>
 </section>
+<style type="text/css">
+.delete {
+    position: absolute;
+    right: 20px;
+    top: 33px;
+}
+
+.add {
+    float: right;
+}
+</style>
 <script type="text/javascript">
 $(function() {
-    $('#btnCreate').click(function() {
-        var name = $('#txtName').val();
-        if (name) {
-            $.ajax({
-                type: 'POST',
-                url: '/bo/service',
-                data: JSON.stringify({
-                    name: name
-                }),
-                contentType: 'application/json'
-            }).done(function(e) {
-                window.location.reload();
-            });
+    new Vue({
+        el: "#app",
+        data: {
+            services: [{
+                name: 'Hair',
+                services: [{
+                    name: 'Haircut',
+                    price: '$50'
+                }, {
+                    name: 'Cut & Blowdry',
+                    price: '$50'
+                }, {
+                    name: 'Hair treatment',
+                    price: '$50'
+                }, {
+                    name: 'Colouring',
+                    price: '$50'
+                }, {
+                    name: 'Cut & Blowdry',
+                    price: '$50'
+                }, {
+                    name: 'Highlights',
+                    price: '$50'
+                }]
+            }, {
+                name: 'Massage',
+                services: [{
+                    name: 'Full Body Massage',
+                    price: '$50'
+                }, {
+                    name: 'Back, Neck & Shoulders',
+                    price: '$50'
+                }]
+            }, {
+                name: 'Facials',
+                services: [{
+                    name: 'Luxury Facial',
+                    price: '$50'
+                }, {
+                    name: 'Pro Acne Facial',
+                    price: '$50'
+                }]
+            }]
+        },
+        methods: {
+            submit: function(e) {},
+            remove: function(index, e) {
+                e.splice(index, 1);
+            },
+            add: function(e) {
+                e.push({
+                    name: '',
+                    price: ''
+                });
+            },
+            addCategory: function() {
+                this.services.push({
+                    name: '',
+                    services: [{
+                        name: '',
+                        price: ''
+                    }]
+                });
+            }
         }
     });
 });
-
-function remove(id) {
-    if (id && confirm('Are you sure to delete?')) {
-        $.ajax({
-            type: 'DELETE',
-            url: '/bo/service/' + id,
-            data: JSON.stringify({
-                _id: id
-            })
-        }).done(function(e) {
-            window.location.reload();
-        });
-    }
-}
 </script>

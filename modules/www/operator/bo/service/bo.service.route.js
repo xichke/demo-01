@@ -8,6 +8,23 @@ module.exports = function(app) {
 		});
 	});
 
+	app.post('/bo/service/category', async (req, res, next) => {
+		try {
+			let operator = await app.models.Operator.findOneAndUpdate(req.operator, {
+				$push: {
+					services: {
+						name: req.body.name
+					}
+				}
+			}).lean();
+			res.json({
+				success: true
+			});
+		} catch (err) {
+			next(err);
+		}
+	});
+
 	app.post('/bo/service', async (req, res, next) => {
 		try {
 			let operator = await app.models.Operator.findOneAndUpdate(req.operator, {
@@ -24,6 +41,7 @@ module.exports = function(app) {
 			next(err);
 		}
 	});
+
 	app.delete('/bo/service/:id', async (req, res, next) => {
 		try {
 			let operator = await app.models.Operator.findOneAndUpdate(req.operator, {
