@@ -1,4 +1,4 @@
-<section id="dashboard-ecommerce">
+<section id="bo">
     <div class="row">
         <div class="col-md-6">
             <div class="card">
@@ -29,7 +29,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <!-- Greetings Content Starts -->
         <div class="col-xl-4 col-md-6 col-12 dashboard-greetings">
@@ -361,6 +360,7 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="data" value="{{JSONstringify stats}}">
 </section>
 <link rel="stylesheet" type="text/css" href="/css/pages/dashboard-ecommerce.min.css">
 <script src="/js/scripts/pages/dashboard-ecommerce.min.js"></script>
@@ -401,16 +401,40 @@ $(function() {
 
     //line
     (function() {
-        var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        let data = JSON.parse($('#data').val());
+        console.log(data);
+        var labels = [],
+            transactions = [],
+            newClients = [],
+            returnClients = [];
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            labels.push(moment(item.date).format('DD/MM'));
+            transactions.push(item.transactions);
+            newClients.push(item.newClients);
+            returnClients.push(item.returnClients);
+        }
         var config = {
             type: 'line',
             data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: labels,
                 datasets: [{
-                    label: 'Client visits',
+                    label: 'transactions',
                     backgroundColor: '#ffc168',
+                    borderColor: '#ffc168',
+                    data: transactions,
+                    fill: false,
+                }, {
+                    label: 'new clients',
+                    backgroundColor: '#0abf53',
+                    borderColor: '#0abf53',
+                    data: newClients,
+                    fill: false,
+                }, {
+                    label: 'return clients',
+                    backgroundColor: '#00aeff',
                     borderColor: '#00aeff',
-                    data: [10, 50, 60, 100, 125, 160, 90],
+                    data: returnClients,
                     fill: false,
                 }]
             },

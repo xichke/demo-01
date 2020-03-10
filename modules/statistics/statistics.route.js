@@ -11,7 +11,11 @@ module.exports = function(app) {
 			let operators = await app.models.Operator.find({}).lean();
 			operators.forEach(async (e) => {
 				let transactions = await app.models.Transaction.count({
-					operator: e._id
+					operator: e._id,
+					checkedIn: {
+						$gte: start,
+						$lte: end
+					}
 				}).lean();
 				let newClients = await app.models.Client.count({
 					operator: e._id,
@@ -21,7 +25,11 @@ module.exports = function(app) {
 					}
 				}).lean();
 				let allClients = await app.models.Transaction.distinct('client').count({
-						operator: e._id
+						operator: e._id,
+						checkedIn: {
+							$gte: start,
+							$lte: end
+						}
 					}).lean(),
 					returnClients = allClients - newClients;
 				await app.models.StatsOperator.findOneAndUpdate({
