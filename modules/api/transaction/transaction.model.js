@@ -76,4 +76,17 @@ _schema.query.today = function() {
 	});
 };
 
+_schema.query.yesterday = function() {
+	let {
+		start,
+		end
+	} = utils.date.yesterday();
+	return this.find({
+		checkedIn: {
+			$gte: start,
+			$lte: end
+		}
+	});
+};
+
 mongoose.model('Transaction', _schema);

@@ -1,7 +1,8 @@
 'use strict';
 
 const mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+  Schema = mongoose.Schema,
+  utils = require('../../shared/utils');
 
 let _schema = new Schema({
   operator: {
@@ -31,6 +32,7 @@ let _schema = new Schema({
   updated: {
     type: Date
   },
+  visit: Number,
   created: {
     type: Date,
     default: Date.now
@@ -43,5 +45,18 @@ _schema.index({
 }, {
   unique: true
 });
+
+_schema.query.yesterday = function() {
+  let {
+    start,
+    end
+  } = utils.date.yesterday();
+  return this.find({
+    checkedIn: {
+      $gte: start,
+      $lte: end
+    }
+  });
+};
 
 mongoose.model('Client', _schema);

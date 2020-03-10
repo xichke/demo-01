@@ -34,6 +34,13 @@ function match(patterns, excludes) {
 }
 
 let date = {
+		yesterday: () => {
+			let yesterday = moment().subtract(1, 'days');
+			return {
+				start: yesterday.startOf('day').toString(),
+				end: yesterday.endOf('day').toString()
+			};
+		},
 		today: () => {
 			let now = moment();
 			return {
@@ -65,10 +72,6 @@ let date = {
 			return '';
 		}
 	};
-
-let {
-	start
-} = date.thisWeek();
 
 module.exports = {
 	match: match,

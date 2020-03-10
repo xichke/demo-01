@@ -10,6 +10,7 @@ module.exports = function(app) {
 	app.models = mongoose.models;
 	mongoose.Promise = Promise;
 	mongoose.set('debug', config.db.debug);
+	mongoose.set('useFindAndModify', false);
 	mongoose.connection.on('connected', () => {
 		console.log('Connection Established');
 	}).on('reconnected', () => {
