@@ -59,3 +59,5 @@ db.logmsg.findOne()
   }
 })
 ```
+
+https://docs.aws.amazon.com/sns/latest/dg/sns-supported-regions-countries.html

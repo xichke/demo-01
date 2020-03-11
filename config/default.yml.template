@@ -4,7 +4,6 @@ db:
   debug: true
 saltRounds: 10
 
-master: 1eopv7sTJ6B4986O
 morgan: dev
 token:
   secret: asdrgt5wefrw235t
@@ -21,3 +20,6 @@ seed:
   - username: 
     password: 
     isAdmin: 
+sns:
+  key: ''
+  secret: ''
